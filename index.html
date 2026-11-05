@@ -145,6 +145,9 @@ body.menu-lock{overflow:hidden}
 .hero-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero-video{opacity:0;transition:opacity .8s var(--ease)}
 .hero-video.ready{opacity:1}
+.hero-end{position:absolute;inset:0;opacity:0;transition:opacity .7s var(--ease);pointer-events:none}
+.hero-end img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-end.on{opacity:1}
 .hero-canvas{opacity:0;transition:opacity .8s var(--ease);display:block}
 .hero-canvas.ready{opacity:1}
 .hero-scrim{position:absolute;inset:0;pointer-events:none;
@@ -569,6 +572,7 @@ body.shot .verify::after{content:none}
   <div class="hero-stage" id="stage">
     <img class="hero-media" id="poster" src="assets/poster.jpg" alt="Hodnik stare štale u zoru, vrata otvorena ka peščanoj stazi u izmaglici" fetchpriority="high">
     <video class="hero-media hero-video" id="vid" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <picture class="hero-end" id="heroEnd" aria-hidden="true"><source media="(max-width:767px)" srcset="assets/end-phone.jpg"><img class="hero-media" src="assets/end-4k.jpg" alt="" decoding="async"></picture>
     <div class="hero-scrim"></div>
 
     <div class="band band-1" data-from="0" data-to=".22">
@@ -816,14 +820,18 @@ const TIMES=[[0,1.6],[1.9,3.5],[3.7,5.3],[5.5,Infinity]];
 const replay=$('#replay');
 function showAt(t){bands.forEach((b,i)=>{const on=t>=TIMES[i][0]&&t<TIMES[i][1];if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
   cue.style.opacity=t<5.5?0:.75}
+const heroEnd=$('#heroEnd');
+/* warm the sharp end still so the crossfade never waits on the network */
+(()=>{const im=new Image();im.src=matchMedia('(max-width:767px)').matches?'assets/end-phone.jpg':'assets/end-4k.jpg';im.decode&&im.decode().catch(()=>{})})();
+function rest(){heroEnd.classList.add('on')}
 function initPlay(){
   vid.src=phone?'assets/hero-mobile.mp4':'assets/hero.mp4';vid.preload='auto';
   showAt(0);cue.style.opacity=0;
-  const start=()=>{vid.classList.add('ready');vid.play().catch(()=>{/* autoplay refused: rest on the poster with the last caption */showAt(99);replay.hidden=false})};
+  const start=()=>{vid.classList.add('ready');vid.play().catch(()=>{/* autoplay refused: rest on the sharp end still with the last caption */rest();showAt(99);replay.hidden=false})};
   vid.addEventListener('canplay',start,{once:true});
-  vid.addEventListener('timeupdate',()=>{showAt(vid.currentTime);prog.style.transform=`scaleX(${(vid.currentTime/(vid.duration||6)).toFixed(4)})`});
-  vid.addEventListener('ended',()=>{showAt(99);prog.style.transform='scaleX(1)';replay.hidden=false});
-  replay.addEventListener('click',()=>{replay.hidden=true;vid.currentTime=0;showAt(0);vid.play().catch(()=>{})});
+  vid.addEventListener('timeupdate',()=>{if(vid.duration&&vid.currentTime>vid.duration-0.35)rest();showAt(vid.currentTime);prog.style.transform=`scaleX(${(vid.currentTime/(vid.duration||6)).toFixed(4)})`});
+  vid.addEventListener('ended',()=>{rest();showAt(99);prog.style.transform='scaleX(1)';replay.hidden=false});
+  replay.addEventListener('click',()=>{replay.hidden=true;heroEnd.classList.remove('on');vid.currentTime=0;showAt(0);vid.play().catch(()=>{})});
   /* pause when the hero is off screen, so it doesn't play unseen */
   new IntersectionObserver(([e])=>{if(!e.isIntersecting&&!vid.paused)vid.pause();else if(e.isIntersecting&&vid.paused&&!vid.ended&&vid.currentTime>0)vid.play().catch(()=>{})},{threshold:.2}).observe(stage);
 }
@@ -834,7 +842,7 @@ addEventListener('scroll',()=>{if(!schedScroll){schedScroll=true;requestAnimatio
 addEventListener('resize',onScroll);
 
 if(reduce||saveData){
-  $('#poster').src='assets/end.jpg';vid.remove();bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
+  heroEnd.classList.add('on');vid.remove();bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
   $('.band-1').style.bottom='34vh';
 }else{initPlay()}
 setNav();
