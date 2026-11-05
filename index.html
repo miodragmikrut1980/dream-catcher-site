@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dream Catcher · Kasačka štala iz Sombora</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Dream Catcher je porodična kasačka štala iz Sombora. Naša grla, rezultati, godina u štali i kalendar trka na hipodromu u Somboru.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dream Catcher · Kasačka štala iz Sombora">
+<meta property="og:description" content="Svako jutro počinje u štali. A završava se na stazi.">
+<meta property="og:image" content="assets/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dream Catcher · Kasačka štala iz Sombora">
+<meta name="twitter:description" content="Svako jutro počinje u štali. A završava se na stazi.">
+<meta name="twitter:image" content="assets/poster.jpg">
+<meta name="theme-color" content="#1E2A22">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E2A22'/%3E%3Cellipse cx='32' cy='32' rx='20' ry='12' fill='none' stroke='%23C9A86A' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=swap">
+<link rel="preload" as="image" href="assets/poster.jpg">
+<style>
+:root{
+  --ink:#1E2A22;
+  --gold:#9A6B1F;
+  --sand:#C9A86A;
+  --paper:#F3EEE4;
+  --program:#2F4A8A;
+  --bay:#6B3A22;
+  --gold-deep:#865c19;
+  --paper-deep:#ECE4D3;
+  --cream-hi:#F1DDB4;
+  --error:#F2B8A0;
+  --verify:#d97706;
+  --ink-soft:rgb(30 42 34 / .72);
+  --line:rgb(30 42 34 / .16);
+  --card:rgb(255 255 255 / .55);
+  --display:"Cormorant",Georgia,"Times New Roman",serif;
+  --body:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-soft:cubic-bezier(.33,0,.15,1);
+  --gutter:clamp(16px,5vw,64px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;overflow-x:hidden}
+img,video,svg{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+
+/* background environment: faint paper grain, fixed */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:radial-gradient(rgb(30 42 34 / .06) 1px,transparent 1px);background-size:3px 3px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--gutter);color:var(--paper);transition:background .5s var(--ease),color .5s var(--ease),padding .5s var(--ease)}
+.nav.solid{background:rgb(243 238 228 / .92);color:var(--ink);backdrop-filter:blur(8px);padding:12px var(--gutter);border-bottom:1px solid var(--line)}
+.brand{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:.02em;text-decoration:none;display:flex;align-items:center;gap:10px;min-height:44px}
+.brand svg{width:30px;height:20px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:500;letter-spacing:.04em}
+.nav ul a{text-decoration:none;opacity:.85;transition:opacity .25s;display:inline-flex;align-items:center;min-height:44px}
+.nav ul a:hover{opacity:1}
+.nav .cta-mini{border:1px solid currentColor;padding:9px 16px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.06em;min-height:44px;display:inline-flex;align-items:center}
+@media (max-width:860px){.nav ul{display:none}}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.burger{display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:13px;font-weight:600;letter-spacing:.06em;color:inherit;background:transparent;border:1px solid currentColor;border-radius:999px;padding:0 16px 0 14px;min-height:44px;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease)}
+.burger:hover{background:rgb(243 238 228 / .14)}
+.nav.solid .burger:hover{background:rgb(30 42 34 / .07)}
+.burger-lines{display:grid;gap:4px;width:18px}
+.burger-lines i{display:block;height:1.6px;background:currentColor;border-radius:2px;transition:transform .35s var(--ease),width .35s var(--ease)}
+.burger-lines i:nth-child(2){width:70%}
+.burger:hover .burger-lines i:nth-child(2){width:100%}
+@media (max-width:560px){.nav .cta-mini{display:none}.burger{padding:0 18px 0 16px;font-size:14px}}
+
+
+/* MOBILE TAB BAR (phones only) */
+.tabbar{display:none}
+@media (max-width:767px){
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:55;display:grid;grid-template-columns:repeat(4,1fr);
+    background:rgb(243 238 228 / .94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);
+    padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));
+    box-shadow:0 -10px 30px rgb(30 42 34 / .08)}
+  .tabbar a,.tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;
+    font:inherit;font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--ink-soft);text-decoration:none;background:none;border:0;border-radius:10px;cursor:pointer;
+    transition:color .25s,background .25s}
+  .tabbar svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar .tab-live svg path{fill:currentColor;stroke:none}
+  .tabbar a.on{color:var(--ink);background:rgb(201 168 106 / .2)}
+  .tabbar a.on svg{stroke:var(--gold-deep)}
+  .tabbar a.on.tab-live svg path{fill:var(--gold-deep)}
+  .live-dot{position:absolute;top:7px;left:calc(50% + 9px);width:8px;height:8px;border-radius:50%;background:#C8452F;border:2px solid var(--paper);display:none}
+  .tabbar.is-live .live-dot{display:block;animation:pulse 1.8s var(--ease-soft) infinite}
+  footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  body.menu-lock .tabbar{visibility:hidden}
+}
+
+/* MENU OVERLAY */
+.menu{position:fixed;inset:0;z-index:80;background:var(--ink);color:var(--paper);overflow-y:auto;overscroll-behavior:contain;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);
+  opacity:0;transition:opacity .45s var(--ease)}
+.menu.open{opacity:1}
+.menu::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;
+  background:radial-gradient(ellipse 60% 40% at 85% 12%,var(--sand),transparent 70%)}
+.menu-inner{position:relative;max-width:1180px;margin:0 auto;padding:18px var(--gutter) 48px;min-height:100%;display:flex;flex-direction:column}
+.menu-top{display:flex;justify-content:space-between;align-items:center;min-height:56px}
+.menu-brand{font-size:24px}
+.menu-close{display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--paper);background:transparent;border:1px solid rgb(243 238 228 / .5);border-radius:999px;padding:0 16px 0 12px;min-height:44px;cursor:pointer;transition:background .3s var(--ease)}
+.menu-close:hover{background:rgb(243 238 228 / .1)}
+.menu-close svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.6;fill:none}
+.menu-body{flex:1;display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(32px,6vw,96px);align-items:center;padding-top:clamp(24px,5vh,56px)}
+.menu-body > *{min-width:0}
+.menu-list{list-style:none;margin:0;padding:0;border-top:1px solid rgb(243 238 228 / .14)}
+.menu-list li{border-bottom:1px solid rgb(243 238 228 / .14);opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.menu.open .menu-list li{opacity:1;transform:none}
+.menu-list a{display:grid;grid-template-columns:44px 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:baseline;padding:16px 4px;text-decoration:none;transition:padding .35s var(--ease)}
+.menu-list a:hover{padding-left:14px}
+.mi-n{grid-row:1 / span 2;font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;color:var(--sand);padding-top:6px}
+.mi-t{font-family:var(--display);font-weight:600;font-size:clamp(34px,4.4vw,56px);line-height:1;letter-spacing:-.01em}
+.menu-list a:hover .mi-t{color:var(--sand)}
+.mi-d{font-size:14px;color:rgb(243 238 228 / .6);margin-top:6px}
+.menu-list li:nth-child(n+4) .mi-t{font-size:clamp(26px,3vw,36px)}
+.menu-side{display:grid;gap:26px;align-content:center}
+.ms-block{border-left:1px solid rgb(201 168 106 / .5);padding-left:20px}
+.ms-label{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--sand)}
+.ms-value{margin:8px 0 2px;font-family:var(--display);font-weight:600;font-size:32px;line-height:1.1}
+.ms-meta{margin:0;font-size:14px;color:rgb(243 238 228 / .66);font-variant-numeric:lining-nums tabular-nums}
+.ms-cta{justify-self:start;margin-top:4px}
+body.menu-lock{overflow:hidden}
+@media (max-width:860px){
+  .menu-body{grid-template-columns:1fr;align-items:start;gap:36px}
+  .mi-t{font-size:38px}
+  .menu-list li:nth-child(n+4) .mi-t{font-size:28px}
+  .menu-list a{grid-template-columns:36px 1fr;padding:14px 2px}
+  .ms-value{font-size:26px}
+}
+
+/* HERO */
+.hero{position:relative;height:420vh;z-index:1}
+.hero-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--ink)}
+.hero-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-video{opacity:0;transition:opacity .8s var(--ease)}
+.hero-video.ready{opacity:1}
+.hero-scrim{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgb(20 28 23 / .55) 0%,rgb(20 28 23 / .05) 32%,rgb(20 28 23 / .05) 55%,rgb(20 28 23 / .8) 100%),linear-gradient(90deg,rgb(20 28 23 / .35),transparent 55%)}
+.band{position:absolute;left:var(--gutter);right:var(--gutter);color:var(--paper);opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .9s var(--ease);pointer-events:none;text-shadow:0 2px 24px rgb(10 14 12 / .55)}
+.band.on{opacity:1;transform:none;pointer-events:auto}
+.band-1{bottom:13vh}
+.band-2,.band-3{bottom:14vh;max-width:640px}
+.band-4{bottom:12vh}
+.kicker{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--cream-hi);display:flex;gap:14px;align-items:center;margin:0 0 14px}
+.kicker::before{content:"";width:36px;height:1px;background:currentColor}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(64px,11vw,168px);line-height:.88;margin:0;letter-spacing:-.01em}
+.band-line{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(38px,5.6vw,76px);line-height:1.02;margin:0}
+.band-4 .band-line{font-style:normal;font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--gold);color:#fff;text-decoration:none;font-weight:600;font-size:15px;letter-spacing:.05em;
+  padding:16px 26px;border-radius:999px;border:0;cursor:pointer;min-height:48px;transition:transform .3s var(--ease),background .3s var(--ease),box-shadow .3s var(--ease);margin-top:26px;font-family:var(--body);text-shadow:none}
+.btn:hover{transform:translateY(-2px);background:var(--gold-deep);box-shadow:0 12px 30px rgb(154 107 31 / .32)}
+.btn svg{width:18px;height:18px;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.scroll-cue{position:absolute;right:var(--gutter);bottom:5vh;font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--paper);opacity:.75;display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .5s}
+.scroll-cue i{width:1px;height:46px;background:linear-gradient(var(--sand),transparent);animation:cue 2.4s var(--ease-soft) infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.progress{position:absolute;left:0;bottom:0;height:2px;background:var(--sand);width:0;opacity:.8}
+.loader{position:absolute;top:22px;right:calc(var(--gutter) + 160px);width:22px;height:22px;opacity:0;transition:opacity .4s}
+.loader.on{opacity:.8}
+@media (max-width:860px){.loader{right:var(--gutter);top:76px}}
+
+/* SECTIONS */
+main{position:relative;z-index:1}
+section{position:relative;padding:clamp(88px,13vw,170px) var(--gutter)}
+.wrap{max-width:1180px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 20px;display:flex;gap:12px;align-items:center}
+.eyebrow b{color:var(--program);font-weight:500}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(44px,6.4vw,92px);line-height:.95;margin:0 0 30px;letter-spacing:-.01em}
+h2 em{font-weight:500;color:var(--gold)}
+h3{font-family:var(--display);font-weight:600;font-size:30px;line-height:1.1;margin:0 0 8px}
+.lede{font-size:clamp(18px,1.6vw,21px);color:var(--ink-soft);max-width:620px;margin:0}
+
+/* reveal: each moment has its own entrance */
+[data-in]{opacity:0;transition:opacity .9s var(--ease),transform 1.1s var(--ease),clip-path 1.2s var(--ease)}
+[data-in="rise"]{transform:translateY(28px)}
+[data-in="slide"]{transform:translateX(-32px)}
+[data-in="wipe"]{clip-path:inset(0 100% 0 0);opacity:1}
+[data-in="scale"]{transform:scale(.96)}
+[data-in].in{opacity:1;transform:none;clip-path:inset(0 0 0 0)}
+
+/* STORY */
+.story .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,6vw,96px);align-items:center}
+.story figure{margin:0;position:relative}
+.story figure img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px}
+.tag-ai{position:absolute;right:10px;bottom:10px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:rgb(30 42 34 / .72);color:var(--paper);padding:4px 8px;border-radius:3px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:44px;border-top:1px solid var(--line)}
+.facts div{padding:20px 16px 0 0}
+.facts strong{display:block;font-family:var(--display);font-size:52px;font-weight:600;line-height:1;color:var(--ink)}
+.facts span{font-size:14px;color:var(--ink-soft)}
+.origin{margin-top:30px;font-family:var(--display);font-style:italic;font-size:26px;line-height:1.3;color:var(--bay);max-width:520px;border-left:2px solid var(--sand);padding-left:20px}
+@media (max-width:860px){.story .grid{grid-template-columns:1fr}.story figure{order:-1}.story figure img{aspect-ratio:4/3}.facts strong{font-size:40px}}
+
+/* TRACK LINE (signature vector, draws on scroll) */
+.trackline{position:absolute;left:0;right:0;top:0;height:100%;pointer-events:none;z-index:0;opacity:.55}
+.trackline path{fill:none;stroke:var(--sand);stroke-width:1.2}
+
+/* YEAR */
+.year{background:var(--ink);color:var(--paper);overflow:hidden}
+.year .eyebrow{color:var(--sand)}
+.year .lede{color:rgb(243 238 228 / .74)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:64px;counter-reset:s;position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:34px;height:1px;background:rgb(201 168 106 / .35);transform-origin:left;transform:scaleX(var(--p,0));transition:transform 1.6s var(--ease)}
+.step{position:relative;padding-top:0}
+.step .ico{width:68px;height:68px;border-radius:50%;background:var(--ink);border:1px solid rgb(201 168 106 / .5);display:grid;place-items:center;margin-bottom:26px;position:relative;z-index:1}
+.step .ico svg{width:30px;height:30px;stroke:var(--sand);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.step .when{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand)}
+.step h3{margin-top:8px;font-size:32px}
+.step p{margin:0;color:rgb(243 238 228 / .74);font-size:15.5px}
+@media (max-width:860px){.steps{grid-template-columns:1fr;gap:34px}.steps::before{display:none}.step{display:grid;grid-template-columns:68px 1fr;gap:20px}.step .ico{margin:0}}
+
+/* HORSES */
+.horses-head{display:flex;justify-content:space-between;align-items:end;gap:40px;flex-wrap:wrap}
+.horses{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:56px}
+.horse{grid-column:span 2;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:0 24px 24px;position:relative;overflow:hidden;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s}
+.horse-img{margin:0 -24px 22px;position:relative;aspect-ratio:3/2;overflow:hidden;background:var(--ink)}
+.horse-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.horse:hover .horse-img img{transform:scale(1.04)}
+.horse:nth-child(4) .horse-img,.horse:nth-child(5) .horse-img{aspect-ratio:16/9}
+.horse:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgb(30 42 34 / .1);border-color:rgb(154 107 31 / .4)}
+.horse:nth-child(4),.horse:nth-child(5){grid-column:span 3}
+.num{font-variant-numeric:lining-nums;font-family:var(--display);font-weight:700;font-size:64px;line-height:.8;color:var(--program);display:flex;align-items:start;justify-content:space-between}
+.num small{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-soft);font-weight:400;margin-top:6px}
+.horse h3{margin-top:22px;font-size:34px}
+.horse p{margin:0;font-size:15px;color:var(--ink-soft)}
+.horse .win{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;font-weight:500;display:flex;gap:10px}
+.horse .win svg{flex:none;width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.6;margin-top:3px}
+.horses-photo{margin-top:18px;position:relative}
+.horses-photo img{width:100%;aspect-ratio:21/8;object-fit:cover;border-radius:6px}
+@media (max-width:980px){.horses{grid-template-columns:1fr 1fr}.horse,.horse:nth-child(4),.horse:nth-child(5){grid-column:span 1}.horse:nth-child(5){grid-column:span 2}}
+@media (max-width:620px){.horses{grid-template-columns:1fr}.horse:nth-child(5){grid-column:span 1}.horses-photo img{aspect-ratio:4/3}}
+
+
+
+/* RESULTS TABLE */
+.results-head{display:flex;justify-content:space-between;align-items:end;gap:40px;flex-wrap:wrap}
+.results-head .lede{max-width:460px}
+.tally-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:48px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tally-row div{padding:22px 20px 22px 0}
+.tally-row div+div{padding-left:24px;border-left:1px solid var(--line)}
+.tally-row dt{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.tally-row dd{margin:6px 0 0;font-family:var(--display);font-weight:600;font-size:clamp(40px,5vw,64px);line-height:1;color:var(--program);font-variant-numeric:lining-nums tabular-nums}
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin:34px 0 18px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:var(--card)}
+.seg button{font:inherit;font-size:14px;font-weight:600;letter-spacing:.03em;border:0;background:transparent;color:var(--ink-soft);padding:10px 18px;border-radius:999px;cursor:pointer;min-height:44px;transition:background .3s var(--ease),color .3s var(--ease)}
+.seg button[aria-checked="true"]{background:var(--ink);color:var(--paper)}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-checked="true"]:hover{color:var(--paper)}
+.sel{display:inline-flex;align-items:center;gap:10px;margin:0;color:var(--ink-soft);font-size:13px;letter-spacing:.06em;font-weight:600}
+.sel span{font-family:var(--mono);font-weight:500;text-transform:uppercase;letter-spacing:.14em;font-size:12px}
+.sel select{width:auto;min-width:190px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:15px}
+.sel select:focus{border-color:var(--gold);background:var(--card)}
+.count{margin:0 0 0 auto;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--ink-soft);text-transform:uppercase}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.res{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:lining-nums tabular-nums}
+.res th{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+.res td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.res tbody tr:last-child td{border-bottom:0}
+.res tbody tr{transition:background .25s}
+.res tbody tr:hover{background:rgb(201 168 106 / .12)}
+.res .r{text-align:right;white-space:nowrap}
+.res .d{font-family:var(--mono);font-size:13px;white-space:nowrap;color:var(--ink-soft)}
+.res .h{font-family:var(--display);font-weight:600;font-size:21px;line-height:1.1;white-space:nowrap}
+.res .km{font-family:var(--display);font-weight:600;font-size:21px;color:var(--program)}
+.res .km.none{font-family:var(--body);font-size:13px;font-weight:500;color:var(--ink-soft)}
+.res .km.best{color:var(--gold-deep)}
+.res .t{min-width:220px}
+.res .t small{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+.res tr.big .t{font-weight:600}
+.res .tag{display:inline-block;margin-left:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);border:1px solid rgb(134 92 25 / .4);border-radius:3px;padding:1px 5px;vertical-align:2px}
+.more{display:flex;justify-content:center;margin-top:18px}
+.more button{font:inherit;font-size:14px;font-weight:600;letter-spacing:.04em;color:var(--ink);background:transparent;border:1px solid var(--ink);border-radius:999px;padding:12px 24px;min-height:48px;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease)}
+.more button:hover{background:var(--ink);color:var(--paper)}
+.src{margin:16px 0 0;font-size:13.5px;color:var(--ink-soft);max-width:720px}
+.src a{color:var(--gold-deep)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.horse .tally{margin:10px 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--program)}
+@media (max-width:980px){
+  .tally-row div{padding:16px 10px 16px 0}.tally-row div+div{padding-left:12px}
+  .tally-row dt{font-size:10.5px;letter-spacing:.1em}
+  .count{margin-left:0;width:100%}
+  .sel{width:100%}.sel select{flex:1;min-width:0}
+  .table-wrap{border:0;background:transparent;overflow:visible}
+  .res thead{display:none}
+  .res,.res tbody,.res tr,.res td{display:block;width:100%}
+  .res tbody{display:grid;gap:12px}
+  .res tr{display:grid;grid-template-columns:1fr auto;gap:2px 12px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px}
+  .res td{padding:0;border:0}
+  .res .d{grid-column:1;grid-row:1}
+  .res .km{grid-column:2;grid-row:1 / span 2;text-align:right;align-self:center;font-size:26px}
+  .res .h{grid-column:1;grid-row:2;font-size:24px}
+  .res .t{grid-column:1 / -1;min-width:0;margin-top:8px}
+  .res .hip,.res .drv,.res .dist{grid-column:1 / -1;font-size:13.5px;color:var(--ink-soft);display:inline}
+  .res .hip::before{content:"Hipodrom: "}
+  .res .drv::before{content:"Vozač: "}
+  .res .dist::before{content:"Staza: "}
+  .res .r{text-align:left}
+}
+
+@media (min-width:600px) and (max-width:980px){.res tbody{grid-template-columns:1fr 1fr}.sel{width:auto}.sel select{flex:none;min-width:220px}.count{width:auto;margin-left:auto}}
+
+/* LIVE */
+.live{background:var(--ink);color:var(--paper)}
+.live .eyebrow{color:var(--sand)}
+.live .lede{color:rgb(243 238 228 / .74)}
+.live-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(36px,5vw,80px);align-items:start}
+.live-grid > *{min-width:0}
+.live-status{display:inline-flex;align-items:center;gap:12px;margin-top:28px;padding:10px 16px;border:1px solid rgb(201 168 106 / .4);border-radius:999px;font-size:14px;color:var(--cream-hi)}
+.live-status .dot{width:9px;height:9px;border-radius:50%;background:var(--sand);flex:none}
+.live-status.on{border-color:rgb(242 184 160 / .7);color:var(--paper)}
+.live-status.on .dot{background:var(--error);box-shadow:0 0 0 0 rgb(242 184 160 / .6);animation:pulse 1.8s var(--ease-soft) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgb(242 184 160 / .6)}70%{box-shadow:0 0 0 10px rgb(242 184 160 / 0)}100%{box-shadow:0 0 0 0 rgb(242 184 160 / 0)}}
+.replays-title{font-size:26px;margin:44px 0 14px}
+.replays{list-style:none;margin:0;padding:0;border-top:1px solid rgb(243 238 228 / .14)}
+.replays li{border-bottom:1px solid rgb(243 238 228 / .14)}
+.replays button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 4px;cursor:pointer;min-height:56px;transition:background .25s,padding .35s var(--ease)}
+.replays button:hover{background:rgb(243 238 228 / .05);padding-left:10px}
+.replays button:focus-visible{outline:2px solid var(--sand);outline-offset:2px;border-radius:4px}
+.replays .rd{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;color:var(--sand)}
+.replays .rt{font-size:15.5px;color:var(--paper)}
+.replays .rt small{display:block;font-size:13px;color:rgb(243 238 228 / .6)}
+.replays .ri{width:34px;height:34px;border-radius:50%;border:1px solid rgb(201 168 106 / .5);display:grid;place-items:center}
+.replays .ri svg{width:12px;height:12px;fill:var(--sand)}
+.replays button[aria-pressed="true"] .ri{background:var(--sand)}
+.replays button[aria-pressed="true"] .ri svg{fill:var(--ink)}
+.player{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:8px;overflow:hidden;background:#000;box-shadow:0 18px 40px rgb(0 0 0 / .28)}
+.player img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transition:transform 1.2s var(--ease),opacity .6s}
+.player:hover img{transform:scale(1.03);opacity:.65}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border:0;background:linear-gradient(180deg,transparent 40%,rgb(20 28 23 / .55));color:var(--paper);cursor:pointer;font:inherit}
+.play-ico{width:84px;height:84px;border-radius:50%;background:var(--gold);display:grid;place-items:center;box-shadow:0 14px 40px rgb(154 107 31 / .45);transition:transform .35s var(--ease)}
+.play:hover .play-ico{transform:scale(1.06)}
+.play-ico svg{width:30px;height:30px;fill:#fff;margin-left:4px}
+.play-label{font-family:var(--display);font-size:28px;font-weight:600;text-shadow:0 2px 20px rgb(0 0 0 / .5)}
+.player-note{margin:14px 0 0;font-size:13.5px;color:rgb(243 238 228 / .6)}
+.player-note a{color:var(--sand)}
+@media (max-width:860px){.live-grid{grid-template-columns:1fr}.play-ico{width:68px;height:68px}.play-label{font-size:22px}}
+
+/* TEAM */
+.team{padding-top:0}
+.team .card{display:grid;grid-template-columns:1fr 1fr;background:var(--ink);color:var(--paper);border-radius:8px;overflow:hidden}
+.team figure{margin:0;position:relative;min-height:420px}
+.team figure img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.team .txt{padding:clamp(36px,5vw,72px)}
+.team .eyebrow{color:var(--sand)}
+.team h2{font-size:clamp(40px,5vw,72px)}
+.team p{color:rgb(243 238 228 / .76);margin:0 0 16px;max-width:460px}
+.team .quote{font-family:var(--display);font-style:italic;font-size:28px;line-height:1.3;color:var(--sand);margin-top:28px}
+@media (max-width:860px){.team .card{grid-template-columns:1fr}.team figure{min-height:260px}}
+
+/* CALENDAR / CTA */
+.cta{background:linear-gradient(180deg,var(--paper),var(--paper-deep))}
+.cta .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,96px);align-items:start}
+.season{border:1px solid var(--line);border-radius:6px;background:var(--card);margin-top:34px}
+.season div{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);font-size:15.5px}
+.season div:last-child{border-bottom:0}
+.season b{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--program);padding-top:2px}
+form{background:var(--ink);color:var(--paper);border-radius:8px;padding:clamp(28px,4vw,48px)}
+form h3{font-size:36px;margin-bottom:6px}
+form > p{color:rgb(243 238 228 / .74);margin:0 0 26px;font-size:15.5px}
+.field{margin-bottom:18px}
+label{display:block;font-size:13px;font-weight:600;letter-spacing:.06em;margin-bottom:7px;color:var(--sand)}
+input,select,textarea{width:100%;font:inherit;font-size:16px;color:var(--paper);background:rgb(243 238 228 / .07);border:1px solid rgb(243 238 228 / .26);border-radius:6px;padding:13px 14px;min-height:48px;transition:border-color .25s,background .25s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sand);background:rgb(243 238 228 / .11)}
+textarea{min-height:110px;resize:vertical}
+select option{color:var(--ink)}
+.hint{font-size:13px;color:rgb(243 238 228 / .6);margin-top:6px}
+.err{font-size:13px;color:var(--error);margin-top:6px;display:none}
+.field.bad .err{display:block}
+.field.bad input{border-color:var(--error)}
+form .btn{margin-top:8px;width:100%;justify-content:center}
+.done{display:none;text-align:left}
+.done.show{display:block;animation:fadein .7s var(--ease)}
+.done svg{width:44px;height:44px;stroke:var(--sand);fill:none;stroke-width:1.5;margin-bottom:14px}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.partner{margin-top:30px;padding-top:24px;border-top:1px solid var(--line);font-size:15.5px;color:var(--ink-soft)}
+.partner a{color:var(--gold-deep);font-weight:600}
+@media (max-width:860px){.cta .grid{grid-template-columns:1fr}.season div{grid-template-columns:90px 1fr}}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgb(243 238 228 / .7);padding:64px var(--gutter) 40px;position:relative;z-index:1;font-size:14px}
+footer .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+footer .brand{color:var(--paper);font-size:30px;margin-bottom:12px}
+footer h4{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand);margin:0 0 12px}
+footer p{margin:0 0 6px}
+.demo-note{max-width:1180px;margin:44px auto 0;padding-top:22px;border-top:1px solid rgb(243 238 228 / .14);font-size:12.5px;color:rgb(243 238 228 / .55)}
+@media (max-width:860px){footer .wrap{grid-template-columns:1fr}}
+
+.verify{outline:1px dashed var(--verify);outline-offset:2px}
+.verify::after{content:" (proveriti)";font-family:var(--mono);font-size:10px;color:var(--verify);letter-spacing:.06em}
+body.shot .verify{outline:0}
+body.shot .verify::after{content:none}
+
+/* PHONE HERO */
+@media (max-width:767px){
+  .hero{height:auto}
+  .hero-stage{position:relative;height:100svh;min-height:560px}
+  .band,.band-1,.band-2,.band-3,.band-4{bottom:calc(6svh + 64px + env(safe-area-inset-bottom,0px));left:var(--gutter);right:var(--gutter);max-width:none}
+  .hero h1{font-size:clamp(58px,17vw,86px)}
+  .band-line{font-size:clamp(34px,9.6vw,46px)}
+  .hero-scrim{background:linear-gradient(180deg,rgb(20 28 23 / .6) 0%,rgb(20 28 23 / 0) 26%,rgb(20 28 23 / 0) 45%,rgb(20 28 23 / .85) 100%)}
+  .scroll-cue{display:none}
+  body{font-size:16px}
+}
+/* phone or tablet held sideways: short screen */
+@media (max-height:520px) and (orientation:landscape){
+  .hero h1{font-size:clamp(44px,13vh,72px)}
+  .band-line{font-size:clamp(28px,9vh,44px)}
+  .kicker{margin-bottom:8px}
+  .band-1,.band-2,.band-3,.band-4{bottom:9vh}
+  .btn{margin-top:14px;padding:12px 22px}
+  .scroll-cue{display:none}
+  .nav{padding-top:8px;padding-bottom:8px}
+  .menu-body{grid-template-columns:1.3fr 1fr;align-items:start}
+  .mi-t,.menu-list li:nth-child(n+4) .mi-t{font-size:26px}
+  .menu-list a{padding:8px 2px}
+  .mi-d{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  [data-in]{opacity:1!important;transform:none!important;clip-path:none!important}
+}
+
+/* PROPOSAL BAR: stays until the owner approves the site */
+.proposal-bar{position:fixed;top:0;left:0;right:0;z-index:60;background:var(--program);color:var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-align:center;
+  padding:calc(7px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 7px max(16px,env(safe-area-inset-left,0px));line-height:1.4}
+.nav{top:calc(30px + env(safe-area-inset-top,0px))}
+@media (max-width:620px){.proposal-bar{font-size:11px}.nav{top:calc(44px + env(safe-area-inset-top,0px))}}
+</style>
+</head>
+<body>
+<div class="proposal-bar" role="note">Predlog sajta · demo, nije zvanični sajt štale Dream Catcher</div>
+<a class="skip" href="#prica">Preskoči na sadržaj</a>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Dream Catcher, na vrh stranice">
+    <svg viewBox="0 0 30 20" aria-hidden="true"><ellipse cx="15" cy="10" rx="13" ry="8" fill="none" stroke="currentColor" stroke-width="1.6"/><ellipse cx="15" cy="10" rx="7" ry="3.6" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+    Dream Catcher
+  </a>
+  <nav aria-label="Glavna navigacija">
+    <ul>
+      <li><a href="#grla">Naša grla</a></li>
+      <li><a href="#rezultati">Rezultati</a></li>
+      <li><a href="#trke">Raspored</a></li>
+      <li><a href="#uzivo">Uživo</a></li>
+    </ul>
+  </nav>
+  <div class="nav-actions">
+    <a class="cta-mini" href="#trke">Kalendar trka</a>
+    <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Otvori meni">
+      <span class="burger-lines" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="burger-text">Meni</span>
+    </button>
+  </div>
+</header>
+
+<nav class="tabbar" id="tabbar" aria-label="Brza navigacija">
+  <a href="#rezultati" data-sec="rezultati">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM5 5h3M16 5h3M12 13v4M8 20h8"/></svg>
+    <span>Rezultati</span>
+  </a>
+  <a href="#trke" data-sec="trke">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>
+    <span>Raspored</span>
+  </a>
+  <a href="#uzivo" data-sec="uzivo" class="tab-live">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12" rx="2.5"/><path d="M10.5 9.5v5l4-2.5z"/></svg>
+    <span>Uživo</span><i class="live-dot" aria-hidden="true"></i>
+  </a>
+  <button type="button" id="tab-menu" aria-controls="menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h11"/></svg>
+    <span>Meni</span>
+  </button>
+</nav>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Meni" hidden>
+  <div class="menu-inner">
+    <div class="menu-top">
+      <span class="brand menu-brand">Dream Catcher</span>
+      <button type="button" class="menu-close" id="menu-close" aria-label="Zatvori meni">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        <span>Zatvori</span>
+      </button>
+    </div>
+    <div class="menu-body">
+      <nav aria-label="Meni sajta">
+        <ol class="menu-list">
+          <li><a href="#rezultati"><span class="mi-n">04</span><span class="mi-t">Rezultati</span><span class="mi-d">27 pobeda, 2025. i 2026.</span></a></li>
+          <li><a href="#trke"><span class="mi-n">07</span><span class="mi-t">Raspored trka</span><span class="mi-d">Sezona 2027. i prijava za obaveštenja</span></a></li>
+          <li><a href="#uzivo"><span class="mi-n">05</span><span class="mi-t">Uživo</span><span class="mi-d">Prenos trke i snimci</span></a></li>
+          <li><a href="#grla"><span class="mi-n">03</span><span class="mi-t">Naša grla</span><span class="mi-d">Kasači štale i njihove pobede</span></a></li>
+          <li><a href="#prica"><span class="mi-n">01</span><span class="mi-t">Priča</span><span class="mi-d">Porodična štala iz Sombora</span></a></li>
+          <li><a href="#godina"><span class="mi-n">02</span><span class="mi-t">Godina u štali</span><span class="mi-d">Od kondicije do sezone</span></a></li>
+          <li><a href="#tim"><span class="mi-n">06</span><span class="mi-t">Tim</span><span class="mi-d">Vozač Vladimir Pribić</span></a></li>
+        </ol>
+      </nav>
+      <aside class="menu-side" aria-label="Ukratko">
+        <div class="ms-block">
+          <p class="ms-label">Poslednja pobeda</p>
+          <p class="ms-value" id="ms-last">Delicious Gar</p>
+          <p class="ms-meta" id="ms-last-meta">24.10.2026. · Srbobran · 1:13,9</p>
+        </div>
+        <div class="ms-block">
+          <p class="ms-label">Sledeća trka</p>
+          <p class="ms-value">Sezona 2027.</p>
+          <p class="ms-meta">Otvaranje krajem aprila, hipodrom Sombor</p>
+        </div>
+        <a class="btn ms-cta" href="#trke">Javite mi pre trke <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<div class="hero" id="top">
+  <div class="hero-stage" id="stage">
+    <img class="hero-media" id="poster" src="assets/poster.jpg" alt="Hodnik stare štale u zoru, vrata otvorena ka peščanoj stazi u izmaglici" fetchpriority="high">
+    <video class="hero-media hero-video" id="vid" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <div class="hero-scrim"></div>
+
+    <div class="band band-1" data-from="0" data-to=".22">
+      <p class="kicker">Kasačka štala · Sombor</p>
+      <h1>Dream<br>Catcher</h1>
+    </div>
+    <div class="band band-2" data-from=".28" data-to=".55"><p class="band-line">Svako jutro<br>počinje u štali.</p></div>
+    <div class="band band-3" data-from=".60" data-to=".85"><p class="band-line">A završava se<br>na stazi.</p></div>
+    <div class="band band-4" data-from=".88" data-to="1.01">
+      <p class="kicker">Sezona 2027.</p>
+      <p class="band-line">Pratite naše trke.</p>
+      <a class="btn" href="#trke">Kalendar sezone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+
+    <div class="scroll-cue" id="cue" aria-hidden="true">SKROLUJ<i></i></div>
+    <svg class="loader" id="loader" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="rgb(243 238 228 / .25)" stroke-width="2"/><circle id="ring" cx="12" cy="12" r="10" fill="none" stroke="#C9A86A" stroke-width="2" stroke-dasharray="62.8" stroke-dashoffset="62.8" transform="rotate(-90 12 12)"/></svg>
+    <div class="progress" id="prog"></div>
+  </div>
+</div>
+
+<main>
+  <section class="story" id="prica">
+    <svg class="trackline" id="trackline" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true"><path d="M-40 760 C 260 900, 720 880, 1040 760 S 1480 420, 1200 230 S 520 60, 160 210 S -60 520, 220 640"/></svg>
+    <div class="wrap grid">
+      <div>
+        <p class="eyebrow" data-in="slide"><b>01</b> Priča</p>
+        <h2 data-in="rise">Porodična štala<br><em>iz Sombora.</em></h2>
+        <p class="lede" data-in="rise">Dream Catcher je kasačka štala porodice Jokić. Oko dvadeset trkačkih grla, jedan grad i ljubav prema konjima koja traje decenijama.</p>
+        <p class="origin" data-in="wipe">Ime je dobila po prvom konju kojeg je porodica kupila.</p>
+        <div class="facts" data-in="rise">
+          <div><strong>~20</strong><span>trkačkih grla</span></div>
+          <div><strong>7</strong><span>meseci sezone, od aprila do novembra</span></div>
+          <div><strong>1</strong><span>domaća staza, hipodrom u Somboru</span></div>
+        </div>
+      </div>
+      <figure data-in="scale">
+        <img src="assets/story.jpg" alt="Kožna oprema za kasačke trke na drvenom zidu štale, u jutarnjem svetlu" loading="lazy" width="1200" height="1500">
+        <span class="tag-ai">Ilustracija</span>
+      </figure>
+    </div>
+  </section>
+
+  <section class="year" id="godina">
+    <div class="wrap">
+      <p class="eyebrow" data-in="slide"><b style="color:var(--sand)">02</b> Godina u štali</p>
+      <h2 data-in="rise">Rezultat se pravi<br><em style="color:var(--sand)">kad niko ne gleda.</em></h2>
+      <p class="lede" data-in="rise">Trka traje par minuta. Priprema traje cele godine, iz dana u dan, sa istim konjima i istim ljudima.</p>
+      <div class="steps" id="steps">
+        <div class="step" data-in="rise">
+          <div class="ico"><svg viewBox="0 0 32 32"><path d="M6 26c4-1 6-5 6-10M12 16c0-5 4-9 9-9h3l-2 4 3 3-4 2"/><circle cx="20" cy="11" r=".8"/></svg></div>
+          <div><span class="when">Januar i februar</span><h3>Kondicija</h3><p>Posle Nove godine kreće rad na tetivama, zglobovima i plućima. Polako i strpljivo.</p></div>
+        </div>
+        <div class="step" data-in="rise">
+          <div class="ico"><svg viewBox="0 0 32 32"><path d="M4 22c6-8 18-8 24 0"/><path d="M8 26c5-5 11-5 16 0"/><path d="M16 4v8M12 8l4 4 4-4"/></svg></div>
+          <div><span class="when">Proleće</span><h3>Snaga i brzina</h3><p>Kad je telo spremno, dolaze izdržljivost i tempo. Svaki konj ima svoj plan.</p></div>
+        </div>
+        <div class="step" data-in="rise">
+          <div class="ico"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="12" ry="7"/><ellipse cx="16" cy="16" rx="6" ry="2.6"/><path d="M27 16h3"/></svg></div>
+          <div><span class="when">April do novembra</span><h3>Sezona trka</h3><p>Sombor, Subotica, Požarevac. Trening se smanjuje da forma ostane na vrhuncu.</p></div>
+        </div>
+        <div class="step" data-in="rise">
+          <div class="ico"><svg viewBox="0 0 32 32"><path d="M22 6a10 10 0 1 0 4 16A8 8 0 0 1 22 6z"/></svg></div>
+          <div><span class="when">Novembar i decembar</span><h3>Odmor</h3><p>Jedina pauza u godini. Konji se odmaraju, a štala planira sledeću sezonu.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="horses-sec" id="grla">
+    <div class="wrap">
+      <div class="horses-head">
+        <div>
+          <p class="eyebrow" data-in="slide"><b>03</b> Naša grla</p>
+          <h2 data-in="rise">Imena koja se<br><em>čuju na stazi.</em></h2>
+        </div>
+        <p class="lede" data-in="rise" style="max-width:420px">Izbor iz štale, po pobedama u poslednje dve sezone. Svako grlo ima svoj tempo i svoju stazu.</p>
+      </div>
+      <div class="horses">
+        <article class="horse" data-in="rise"><figure class="horse-img"><img src="assets/g-delicious-gar.jpg" alt="Kasač sa sulkijem u kontra svetlu na peščanoj stazi, letnje veče" loading="lazy" width="1200" height="797"><span class="tag-ai">Ilustracija</span></figure><div class="num">1<small>KASAČ (IT)</small></div><h3>Delicious Gar</h3><p>Najbrži u štali. Subotičku milju istrčao za 1:13,0.</p><div class="win"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM5 5h3M16 5h3M12 13v4M8 20h8"/></svg>Subotička milja i finale Dužijance, 2026.</div><p class="tally">7 pobeda u sezoni 2026.</p></article>
+        <article class="horse" data-in="rise"><figure class="horse-img"><img src="assets/g-breakpoint-pellini.jpg" alt="Kasač sa sulkijem prolazi kroz cilj ispred male tribine" loading="lazy" width="1200" height="797"><span class="tag-ai">Ilustracija</span></figure><div class="num">2<small>KASAČ (SE)</small></div><h3>Breakpoint Pellini</h3><p>Pobednik trke za pehar „Somborskih novina“.</p><div class="win"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM5 5h3M16 5h3M12 13v4M8 20h8"/></svg>Pehar „Somborskih novina“, 2026, 1:15,4.</div><p class="tally">6 pobeda u 2025. i 2026.</p></article>
+        <article class="horse" data-in="rise"><figure class="horse-img"><img src="assets/g-demon-dell-est.jpg" alt="Kasač sa sulkijem na dugoj pravoj, jutarnja magla i topole" loading="lazy" width="1200" height="797"><span class="tag-ai">Ilustracija</span></figure><div class="num">3<small>KASAČ (IT)</small></div><h3>Demon dell'Est</h3><p>Dve godine zaredom prvi u Požarevcu.</p><div class="win"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM5 5h3M16 5h3M12 13v4M8 20h8"/></svg>Trka „Knez Mihailo“, 2025. i 2026.</div><p class="tally">7 pobeda u 2025. i 2026.</p></article>
+        <article class="horse" data-in="rise"><figure class="horse-img"><img src="assets/g-captain-jog.jpg" alt="Kasač sa sulkijem u krivini staze, jesenji sumrak" loading="lazy" width="1200" height="797"><span class="tag-ai">Ilustracija</span></figure><div class="num">4<small>KASAČ (SE)</small></div><h3>Captain Jog</h3><p>Grlo za dugu stazu od 2200 metara.</p><div class="win"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM5 5h3M16 5h3M12 13v4M8 20h8"/></svg>Dve pobede u Somboru, 2026.</div><p class="tally">2 pobede u sezoni 2026.</p></article>
+        <article class="horse" data-in="rise"><figure class="horse-img"><img src="assets/g-yohani.jpg" alt="Kasač pod ćebetom na vratima štale posle trke" loading="lazy" width="1200" height="797"><span class="tag-ai">Ilustracija</span></figure><div class="num">5<small>KASAČ (RS)</small></div><h3>Yohani A.T.</h3><p>Domaći odgoj, pobede u Somboru i Subotici.</p><div class="win"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4zM5 5h3M16 5h3M12 13v4M8 20h8"/></svg>KK „Vojvođanin“, Sombor, avgust 2026.</div><p class="tally">2 pobede u sezoni 2026.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="results" id="rezultati">
+    <div class="wrap">
+      <div class="results-head">
+        <div>
+          <p class="eyebrow" data-in="slide"><b>04</b> Rezultati</p>
+          <h2 data-in="rise">Pehari se<br><em>pamte.</em></h2>
+        </div>
+        <p class="lede" data-in="rise">Sve pobede grla iz štale Dream Catcher u sezonama 2025. i 2026, prema zvaničnim rezultatima Srpskog kasačkog saveza.</p>
+      </div>
+      <dl class="tally-row" data-in="rise">
+        <div><dt>Pobeda</dt><dd id="st-wins">27</dd></div>
+        <div><dt>Hipodroma</dt><dd id="st-tracks">7</dd></div>
+        <div><dt>Najbolja kilometraža</dt><dd id="st-best">1:13,0</dd></div>
+      </dl>
+      <div class="filters" role="group" aria-label="Filter rezultata">
+        <div class="seg" id="f-year" role="radiogroup" aria-label="Sezona">
+          <button type="button" role="radio" aria-checked="true" data-year="all">Sve</button>
+          <button type="button" role="radio" aria-checked="false" data-year="2026">2026.</button>
+          <button type="button" role="radio" aria-checked="false" data-year="2025">2025.</button>
+        </div>
+        <label class="sel" for="f-horse"><span>Grlo</span>
+          <select id="f-horse"><option value="all">Sva grla</option></select>
+        </label>
+        <p class="count" id="f-count" aria-live="polite"></p>
+      </div>
+      <div class="table-wrap">
+        <table class="res" id="res">
+          <caption class="sr">Pobede štale Dream Catcher, od najnovije</caption>
+          <thead><tr><th scope="col">Datum</th><th scope="col">Grlo</th><th scope="col">Trka</th><th scope="col">Hipodrom</th><th scope="col">Vozač</th><th scope="col" class="r">Staza</th><th scope="col" class="r">Km vreme</th></tr></thead>
+          <tbody id="res-body"></tbody>
+        </table>
+      </div>
+      <div class="more"><button type="button" id="res-more" aria-controls="res-body" aria-expanded="false">Prikaži sve pobede</button></div>
+      <p class="src">Izvor: <a href="http://www.serbia-trot.org.rs/" target="_blank" rel="noopener">zvanični rezultati kasačkih trka, Srpski kasački savez</a>. Km vreme je prosečno vreme na kilometar. Tabela se dopunjuje posle svakog trkačkog dana.</p>
+    </div>
+  </section>
+
+  <section class="live" id="uzivo">
+    <div class="wrap live-grid">
+      <div class="live-copy">
+        <p class="eyebrow" data-in="slide"><b style="color:var(--sand)">05</b> Uživo</p>
+        <h2 data-in="rise">Trka uživo,<br><em style="color:var(--sand)">gde god da ste.</em></h2>
+        <p class="lede" data-in="rise">Na dan trke prenos se pušta ovde, sa hipodroma. Van trkačkih dana pogledajte snimke trka iz Sombora.</p>
+        <div class="live-status" id="live-status" data-in="rise">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="live-text">Van sezone. Prvi prenos stiže sa otvaranjem sezone 2027.</span>
+        </div>
+        <h3 class="replays-title">Snimci trka</h3>
+        <ul class="replays" id="replays"></ul>
+      </div>
+      <div class="live-player" data-in="scale">
+        <div class="player" id="player">
+          <img src="assets/end.jpg" alt="" aria-hidden="true">
+          <button type="button" class="play" id="play">
+            <span class="play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg></span>
+            <span class="play-label" id="play-label">Pokreni prenos uživo</span>
+          </button>
+        </div>
+        <p class="player-note">Prenos ne radi? <a id="yt-link" href="#" target="_blank" rel="noopener">Otvorite ga na YouTube-u</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="team" id="tim">
+    <div class="wrap">
+      <div class="card" data-in="scale">
+        <figure>
+          <img src="assets/team.jpg" alt="Kaciga i rukavice vozača sulkija na drvenoj klupi u štali" loading="lazy" width="1200" height="1200">
+          <span class="tag-ai">Ilustracija</span>
+        </figure>
+        <div class="txt">
+          <p class="eyebrow"><b style="color:var(--sand)">06</b> Tim</p>
+          <h2>Ruke koje<br>drže uzde.</h2>
+          <p>Vladimir Pribić vozi sulki za Dream Catcher. Uz konje je oko trideset godina, od dečačkih dana u štali do pobeda na Subotičkoj milji i Dužijanci.</p>
+          <p>Kaže da rezultat dolazi iz poverenja između čoveka i konja. Bez toga nema cilja.</p>
+          <p class="quote">Trideset godina uz konje.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="trke">
+    <div class="wrap grid">
+      <div>
+        <p class="eyebrow" data-in="slide"><b>07</b> Kalendar</p>
+        <h2 data-in="rise">Sezona 2027.<br><em>počinje u aprilu.</em></h2>
+        <p class="lede" data-in="rise">Ostavite e-mail i javićemo vam pre svake trke u kojoj nastupa Dream Catcher. Samo datumi, bez reklama.</p>
+        <div class="season" data-in="rise">
+          <div><b>April</b><span>Otvaranje sezone, hipodrom Sombor <span class="verify"></span></span></div>
+          <div><b>Jun</b><span>Trka za pehar Grada Sombora <span class="verify"></span></span></div>
+          <div><b>Avgust</b><span>Trka za pehar „Somborskih novina“ <span class="verify"></span></span></div>
+          <div><b>Oktobar</b><span>Završni dan sezone <span class="verify"></span></span></div>
+        </div>
+        <p class="partner" data-in="rise">Za saradnju, sponzorstvo ili upit o grlima pišite nam preko forme, uz napomenu „saradnja“.</p>
+      </div>
+      <div data-in="scale">
+        <form id="form" novalidate>
+          <div id="form-body">
+            <h3>Javite mi pre trke</h3>
+            <p>Jedna poruka pred svaku trku. Odjava jednim klikom.</p>
+            <div class="field" id="f-name"><label for="name">Ime</label><input id="name" name="name" autocomplete="given-name"></div>
+            <div class="field" id="f-email"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-err"><p class="err" id="email-err">Upišite ispravnu e-mail adresu.</p></div>
+            <div class="field"><label for="topic">Tema</label>
+              <select id="topic" name="topic"><option>Obaveštenja o trkama</option><option>Saradnja i sponzorstvo</option><option>Upit o grlima</option></select></div>
+            <div class="field"><label for="msg">Poruka (nije obavezno)</label><textarea id="msg" name="msg"></textarea></div>
+            <button class="btn" type="submit">Prijavi me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+          <div class="done" id="done" role="status" aria-live="polite">
+            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21"/><path d="M15 24l6 6 12-13"/></svg>
+            <h3>Hvala, tu ste na spisku.</h3>
+            <p style="color:rgb(243 238 228 / .74)">Javićemo se pred prvu trku sezone 2027.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top">Dream Catcher</a>
+      <p>Kasačka štala porodice Jokić, Sombor.</p>
+    </div>
+    <div>
+      <h4>Domaća staza</h4>
+      <p>Gradski hipodrom Sombor</p>
+      <p>KK „Vojvođanin“</p>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <p><a href="#trke">Forma za upite</a></p>
+      <p><span class="verify">telefon i e-mail štale</span></p>
+    </div>
+  </div>
+  <p class="demo-note">Ovo je predlog sajta, napravljen kao demo. Fotografije su ilustracija, generisane veštačkom inteligencijom, i biće zamenjene pravim fotografijama štale.</p>
+</footer>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const saveData=navigator.connection&&navigator.connection.saveData;
+const phone=matchMedia('(max-width:767px)').matches;
+const nav=$('#nav'),stage=$('#stage'),hero=$('.hero'),vid=$('#vid'),bands=[...document.querySelectorAll('.band')],
+      prog=$('#prog'),cue=$('#cue'),loader=$('#loader'),ring=$('#ring');
+
+/* nav */
+const setNav=()=>nav.classList.toggle('solid',scrollY>innerHeight*(phone?.6:3.6));
+
+/* bands */
+let lastP=-1;
+function showBands(p){
+  if(Math.abs(p-lastP)<.002)return;lastP=p;
+  bands.forEach(b=>{const on=p>=+b.dataset.from&&p<+b.dataset.to;if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
+  prog.style.width=(p*100).toFixed(2)+'%';
+  cue.style.opacity=p>.04?0:.75;
+}
+function heroProgress(){const r=hero.getBoundingClientRect();const total=hero.offsetHeight-innerHeight;return Math.min(1,Math.max(0,-r.top/Math.max(1,total)))}
+
+/* video loading */
+let ready=false,dur=6,target=0,shown=0,seeking=false,raf=0;
+async function loadBlob(src){
+  try{
+    const res=await fetch(src);if(!res.ok)throw 0;
+    const len=+res.headers.get('content-length')||0;const reader=res.body.getReader();const chunks=[];let got=0;
+    loader.classList.add('on');
+    for(;;){const {done,value}=await reader.read();if(done)break;chunks.push(value);got+=value.length;if(len)ring.style.strokeDashoffset=62.8*(1-got/len)}
+    loader.classList.remove('on');
+    return URL.createObjectURL(new Blob(chunks,{type:'video/mp4'}));
+  }catch(e){loader.classList.remove('on');return null}
+}
+function tick(){
+  raf=0;
+  const d=target-shown;
+  if(Math.abs(d)>0.004){shown+=d*0.16;if(!seeking){seeking=true;vid.currentTime=shown}raf=requestAnimationFrame(tick)}
+}
+vid.addEventListener('seeked',()=>{seeking=false});
+
+async function initDesktop(){
+  const url=await loadBlob('assets/hero.mp4');if(!url)return;
+  vid.src=url;vid.addEventListener('loadedmetadata',()=>{dur=vid.duration;ready=true;vid.classList.add('ready');onScroll()},{once:true});
+}
+async function initPhone(){
+  vid.src='assets/hero-mobile.mp4';vid.preload='auto';
+  vid.addEventListener('canplay',()=>{vid.classList.add('ready');vid.play().catch(()=>{})},{once:true});
+  // phone: bands follow playback time
+  const order=[[0,1.6],[1.9,3.5],[3.7,5.3],[5.5,99]];
+  bands.forEach((b,i)=>b.classList.toggle('on',i===0));
+  vid.addEventListener('timeupdate',()=>{const t=vid.currentTime;bands.forEach((b,i)=>b.classList.toggle('on',t>=order[i][0]&&t<order[i][1]))});
+  vid.addEventListener('ended',()=>{bands.forEach((b,i)=>b.classList.toggle('on',i===3))});
+}
+
+function onScroll(){
+  setNav();
+  if(phone)return;
+  const p=heroProgress();showBands(p);
+  if(ready){target=p*(dur-0.05);if(!raf)raf=requestAnimationFrame(tick)}
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onScroll);
+
+if(reduce||saveData){
+  $('#poster').src='assets/end.jpg';hero.style.height='100svh';bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
+  $('.band-1').style.bottom='34vh';
+}else if(phone){initPhone()}else{initDesktop();showBands(0)}
+setNav();
+
+/* reveals */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -12% 0px'});
+document.querySelectorAll('[data-in]').forEach((el,i)=>{el.style.transitionDelay=(el.closest('.horses,.steps')?(i%5)*90:0)+'ms';io.observe(el)});
+
+/* scroll-linked lines: track path, steps rail */
+const path=document.querySelector('#trackline path');const L=path.getTotalLength();path.style.strokeDasharray=L;path.style.strokeDashoffset=L;
+const steps=$('#steps'),story=$('#prica');
+function lines(){
+  const vh=innerHeight;
+  const sr=story.getBoundingClientRect();const sp=Math.min(1,Math.max(0,(vh-sr.top)/(sr.height+vh*.4)));path.style.strokeDashoffset=L*(1-sp);
+  const st=steps.getBoundingClientRect();if(st.top<vh*.8)steps.style.setProperty('--p',1);
+}
+if(!reduce){addEventListener('scroll',()=>requestAnimationFrame(lines),{passive:true});lines()}else{path.style.strokeDashoffset=0;steps.style.setProperty('--p',1)}
+
+
+/* ---------- RESULTS: official wins (Srpski kasački savez), newest first ---------- */
+const RESULTS=[
+ ["2026-10-24","Delicious Gar","„Bata General“, Poštanska štedionica","Srbobran","Pribić V.",1600,"1:13,9"],
+ ["2026-10-18","Captain Jog","KK „Vojvođanin“, Sombor","Sombor","Pribić V.",2200,"1:20,3"],
+ ["2026-09-13","Delicious Gar","6. Hollo Cup","Sombor","Pribić V.",1700,"1:13,1"],
+ ["2026-09-13","Breakpoint Pellini","Veterinarska ambulanta Dragan Marić, Stapar","Sombor","Pribić V.",1700,"1:16,7"],
+ ["2026-09-06","Demon dell'Est","„Knez Mihailo“","Požarevac","Vukosavljev N.",2200,"1:15,1"],
+ ["2026-08-09","Breakpoint Pellini","Pehar „Somborskih novina“","Sombor","Pribić V.",1700,"1:15,4",1],
+ ["2026-08-09","Yohani A.T.","KK „Vojvođanin“, Sombor","Sombor","Pribić V.",1700,"1:18,4"],
+ ["2026-07-26","Delicious Gar","Finale Dužijanca 2026","Subotica","Pribić V.",1600,"1:13,8",1],
+ ["2026-07-26","Delicious Gar","Dužijanca 2026, II kvalifikacija","Subotica","Pribić V.",1600,"1:14,9"],
+ ["2026-07-25","Yohani A.T.","„Hit voće“, Subotica","Subotica","Pribić V.",2150,"1:23,2"],
+ ["2026-07-11","Delicious Gar","Petrovdanska trka","Srbobran","Pribić V.",1600,"1:15,5"],
+ ["2026-06-28","Demon dell'Est","Trka grada Pančeva","Pančevo","Pribić V.",2200,"1:16,4",1],
+ ["2026-06-27","Delicious Gar","Subotička milja","Subotica","Pribić V.",1609,"1:13,0",1],
+ ["2026-06-21","Demon dell'Est","„Dream Catcher“ d.o.o., Sombor","Ruski Krstur","Pribić V.",1800,""],
+ ["2026-05-31","Delicious Gar","„Triglav“ a.d.o., Beograd","Sombor","Pribić V.",2200,"1:16,2"],
+ ["2026-05-31","Breakpoint Pellini","„Dream Catcher“ d.o.o., Sombor","Sombor","Pribić V.",2200,"1:18,6"],
+ ["2026-05-31","Captain Jog","KK „Vojvođanin“, Sombor","Sombor","Pribić V.",2200,"1:21,7"],
+ ["2026-05-10","Breakpoint Pellini","„Termovod“ d.o.o., Sombor","Sombor","Pribić V.",1700,"1:17,1"],
+ ["2025-09-28","Demon dell'Est","„Porodica Miljković“, Sydney","Sombor","Pribić V.",1700,"1:14,6"],
+ ["2025-09-14","Aragorn","„Šafranj Co.“, Subotica","Subotica","Pribić V.",2150,"1:17,4"],
+ ["2025-09-07","Demon dell'Est","„Knez Mihailo“","Požarevac","Pribić V.",2200,"1:15,8"],
+ ["2025-08-31","Demon dell'Est","Memorijalna trka „Mirko Vrgov“","Ada","Pribić V.",1600,"1:14,1"],
+ ["2025-08-10","Breakpoint Pellini","„ZZ Ravangrad“","Sombor","Pribić V.",1700,"1:21,8"],
+ ["2025-07-27","Demon dell'Est","Dužijanca 2025, II trčanje","Subotica","Piscuoglio C.",1600,"1:14,7",1],
+ ["2025-07-27","Breakpoint Pellini","Memorijal Albe Tumbas Loketić","Subotica","Pribić V.",1600,"1:24,2"],
+ ["2025-07-06","Aragorn","„Scan Metals“, Srbobran","Srbobran","Pribić V.",2100,"1:18,7"],
+ ["2025-06-08","Amsterdam JMH","„Sveta Trojica“","Požarevac","Pribić V.",1600,"1:15,6"]
+];
+(function(){
+  const body=$('#res-body'),yearSeg=$('#f-year'),horseSel=$('#f-horse'),count=$('#f-count');
+  const fmtDate=d=>{const [y,m,dd]=d.split('-');return `${dd}.${m}.${y}.`};
+  const toSec=t=>{if(!t)return Infinity;const [m,r]=t.split(':');return +m*60+parseFloat(r.replace(',','.'))};
+  const best=Math.min(...RESULTS.map(r=>toSec(r[6])));
+  [...new Set(RESULTS.map(r=>r[1]))].sort((a,b)=>a.localeCompare(b,'sr')).forEach(h=>{const o=document.createElement('option');o.value=h;o.textContent=h;horseSel.appendChild(o)});
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let year='all',all=false;const LIMIT=10;const more=$('#res-more');
+  function render(){
+    const rows=RESULTS.filter(r=>(year==='all'||r[0].startsWith(year))&&(horseSel.value==='all'||r[1]===horseSel.value));
+    const shown=all?rows:rows.slice(0,LIMIT);more.parentElement.hidden=rows.length<=LIMIT;more.textContent=all?'Prikaži manje':`Prikaži sve pobede (${rows.length})`;more.setAttribute('aria-expanded',String(all));
+    body.innerHTML=shown.map(r=>{const km=r[6]?`<td class="km r${toSec(r[6])===best?' best':''}">${esc(r[6])}</td>`:'<td class="km r none">vreme nije upisano</td>';
+      return `<tr${r[7]?' class="big"':''}><td class="d">${fmtDate(r[0])}</td><td class="h">${esc(r[1])}</td><td class="t">${esc(r[2])}${r[7]?'<span class="tag">Velika trka</span>':''}</td><td class="hip">${esc(r[3])}</td><td class="drv">${esc(r[4])}</td><td class="dist r">${r[5]} m</td>${km}</tr>`}).join('');
+    const n=rows.length;const w=(n%10>=2&&n%10<=4&&(n%100<12||n%100>14))?'pobede':'pobeda';count.textContent=n+' '+w;
+    $('#st-wins').textContent=n;
+    $('#st-tracks').textContent=new Set(rows.map(r=>r[3])).size;
+    const b=Math.min(...rows.map(r=>toSec(r[6])));const br=rows.find(r=>toSec(r[6])===b);$('#st-best').textContent=br&&br[6]?br[6]:'nema';
+  }
+  yearSeg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;year=b.dataset.year;yearSeg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-checked',String(x===b)));render()});
+  yearSeg.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;const bs=[...yearSeg.querySelectorAll('button')];const i=bs.findIndex(x=>x.getAttribute('aria-checked')==='true');const n=bs[(i+(e.key==='ArrowRight'?1:bs.length-1))%bs.length];n.focus();n.click()});
+  horseSel.addEventListener('change',render);
+  more.addEventListener('click',()=>{const was=all;all=!all;render();if(was)$('#rezultati').scrollIntoView({behavior:reduce?'auto':'smooth'})});
+  render();
+})();
+
+/* ---------- LIVE: YouTube live stream + replays ---------- */
+const STREAM={
+  /* YouTube kanal koji prenosi trke. Sada: SPORT Uživo (snima trke u Somboru). Zameniti kanalom štale ili hipodroma po dogovoru. */
+  channelId:"UChJf_kuMvpGhyV2BLNO-orQ",
+  /* Trkački dani (YYYY-MM-DD). Na taj dan sajt pokazuje oznaku UŽIVO. Dopuniti kad izađe kalendar 2027. */
+  raceDays:[],
+  replays:[
+    {id:"Be5D6nvzGPU",date:"14.06.2026.",title:"Kasačke trke, 3. dan",place:"Hipodrom KK „Vojvođanin“, Sombor"},
+    {id:"CBLB4fExNMs",date:"31.05.2026.",title:"Kasačke trke, 2. dan",place:"Hipodrom KK „Vojvođanin“, Sombor"},
+    {id:"NfWZYVbntqM",date:"10.05.2026.",title:"Kasačke trke, 1. dan",place:"Hipodrom KK „Vojvođanin“, Sombor"}
+  ]
+};
+(function(){
+  const player=$('#player'),play=$('#play'),label=$('#play-label'),link=$('#yt-link'),list=$('#replays'),status=$('#live-status'),stext=$('#live-text');
+  const today=new Date().toISOString().slice(0,10);
+  const live=STREAM.raceDays.includes(today);
+  if(live){status.classList.add('on');stext.textContent='Uživo danas sa hipodroma.'}
+  let current=live?{live:true}:{...STREAM.replays[0]};
+  const urls=c=>c.live?{embed:`https://www.youtube.com/embed/live_stream?channel=${STREAM.channelId}&autoplay=1`,watch:`https://www.youtube.com/channel/${STREAM.channelId}/live`}
+                        :{embed:`https://www.youtube-nocookie.com/embed/${c.id}?autoplay=1&rel=0`,watch:`https://www.youtube.com/watch?v=${c.id}`};
+  function setLabel(){label.textContent=current.live?'Pokreni prenos uživo':`Pogledaj snimak, ${current.date}`;link.href=urls(current).watch}
+  function load(){const f=document.createElement('iframe');f.src=urls(current).embed;f.title=current.live?'Prenos trke uživo':`Snimak trke ${current.date}`;f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+    player.querySelectorAll('iframe').forEach(x=>x.remove());player.appendChild(f);play.hidden=true}
+  list.innerHTML=STREAM.replays.map((r,i)=>`<li><button type="button" data-i="${i}" aria-pressed="false"><span class="rd">${r.date}</span><span class="rt">${r.title}<small>${r.place}</small></span><span class="ri" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg></span></button></li>`).join('');
+  list.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;current={...STREAM.replays[+b.dataset.i]};list.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));setLabel();load()});
+  play.addEventListener('click',load);
+  setLabel();
+})();
+
+/* ---------- HAMBURGER MENU ---------- */
+(function(){
+  const menu=$('#menu'),btn=$('#burger'),close=$('#menu-close');
+  const items=[...menu.querySelectorAll('.menu-list li')];
+  let lastFocus=null;
+  /* fill "Poslednja pobeda" from the results table data */
+  if(typeof RESULTS!=='undefined'&&RESULTS.length){const r=RESULTS[0];const [y,m,d]=r[0].split('-');
+    $('#ms-last').textContent=r[1];$('#ms-last-meta').textContent=`${d}.${m}.${y}. · ${r[3]}${r[6]?' · '+r[6]:''}`}
+  const focusables=()=>[...menu.querySelectorAll('a[href],button')];
+  function open(){lastFocus=document.activeElement;menu.hidden=false;document.body.classList.add('menu-lock');btn.setAttribute('aria-expanded','true');
+    items.forEach((li,i)=>li.style.transitionDelay=(reduce?0:60+i*45)+'ms');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>menu.classList.add('open')));close.focus()}
+  function shut(focusBack=true){menu.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.classList.remove('menu-lock');
+    items.forEach(li=>li.style.transitionDelay='0ms');
+    const done=()=>{menu.hidden=true};reduce?done():setTimeout(done,420);
+    if(focusBack&&lastFocus)lastFocus.focus()}
+  btn.addEventListener('click',open);
+  close.addEventListener('click',()=>shut());
+  menu.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();const t=document.querySelector(a.getAttribute('href'));shut(false);
+    setTimeout(()=>{if(t){t.scrollIntoView({behavior:reduce?'auto':'smooth'});t.setAttribute('tabindex','-1');t.focus({preventScroll:true})}},reduce?0:200)});
+  document.addEventListener('keydown',e=>{if(menu.hidden)return;
+    if(e.key==='Escape'){e.preventDefault();shut()}
+    if(e.key==='Tab'){const f=focusables();const first=f[0],last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+})();
+
+
+/* ---------- MOBILE TAB BAR ---------- */
+(function(){
+  const bar=$('#tabbar');if(!bar)return;
+  const mq=matchMedia('(max-width:767px)');
+  const heroEl=$('.hero');
+  const links=[...bar.querySelectorAll('a[data-sec]')];
+  const secs=links.map(a=>document.getElementById(a.dataset.sec));
+  /* race day: red dot on Uživo */
+  try{if(STREAM.raceDays.includes(new Date().toISOString().slice(0,10)))bar.classList.add('is-live')}catch(e){}
+  $('#tab-menu').addEventListener('click',()=>$('#burger').click());
+  let ticking=false;
+  function update(){
+    ticking=false;
+    if(!mq.matches)return;
+    /* highlight the section in view */
+    const mid=innerHeight*0.4;let cur=-1;
+    secs.forEach((sec,i)=>{if(!sec)return;const r=sec.getBoundingClientRect();if(r.top<=mid&&r.bottom>mid)cur=i});
+    links.forEach((a,i)=>{const on=i===cur;a.classList.toggle('on',on);on?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')});
+  }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
+  addEventListener('resize',update);
+  /* tapping a tab: show the bar while the page travels there */
+  update();
+})();
+
+/* form: demo success state, nothing is sent */
+$('#form').addEventListener('submit',e=>{
+  e.preventDefault();const em=$('#email'),f=$('#f-email');
+  const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim());f.classList.toggle('bad',!ok);
+  if(!ok){em.focus();return}
+  $('#form-body').style.display='none';$('#done').classList.add('show');
+});
+})();
+</script>
+</body>
+</html>
