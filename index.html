@@ -788,27 +788,34 @@ function showBands(p){
 function heroProgress(){const r=hero.getBoundingClientRect();const total=hero.offsetHeight-innerHeight;return Math.min(1,Math.max(0,-r.top/Math.max(1,total)))}
 
 /* ---------- DESKTOP HERO: image sequence on canvas (no video decoding while scrolling) ---------- */
-const FRAMES=97,frameUrl=i=>`assets/frames/f${String(i+1).padStart(3,'0')}.webp`;
+const FRAMES=121,frameUrl=i=>`assets/frames/f${String(i+1).padStart(3,'0')}.webp`;
 const cv=$('#cv'),ctx=cv.getContext('2d',{alpha:false});
 const imgs=new Array(FRAMES).fill(null);let loadedCount=0,ready=false,target=0,current=0,drawn=-1,raf=0;
 function sizeCanvas(){const dpr=Math.min(devicePixelRatio||1,1.5);const w=stage.clientWidth,h=stage.clientHeight;
-  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);drawn=-1;if(ready)draw(Math.round(current))}
+  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);drawn=-1;if(ready)draw(current)}
 function nearest(i){if(imgs[i])return i;for(let d=1;d<FRAMES;d++){if(i-d>=0&&imgs[i-d])return i-d;if(i+d<FRAMES&&imgs[i+d])return i+d}return -1}
-function draw(i){const k=nearest(i);if(k<0||k===drawn)return;const im=imgs[k];
-  const cw=cv.width,ch=cv.height,iw=im.naturalWidth,ih=im.naturalHeight,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;
-  ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh);drawn=k}
+/* draw a fractional position: frame k, then frame k+1 blended on top, so motion flows between frames */
+function paint(im,a){const cw=cv.width,ch=cv.height,iw=im.naturalWidth,ih=im.naturalHeight,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;
+  ctx.globalAlpha=a;ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh)}
+function draw(pos){const key=Math.round(pos*64);if(key===drawn)return;
+  const k0=Math.floor(pos),t=pos-k0,a=nearest(k0);if(a<0)return;
+  paint(imgs[a],1);
+  const k1=Math.min(FRAMES-1,k0+1);if(t>0.01&&k1!==k0&&imgs[k1])paint(imgs[k1],t);
+  ctx.globalAlpha=1;drawn=key}
 function tick(){raf=0;const d=target-current;
-  if(Math.abs(d)>0.02){current+=d*(lenis?0.5:0.22);raf=requestAnimationFrame(tick)}else current=target;
-  draw(Math.round(current))}
+  if(Math.abs(d)>0.005){current+=d*(lenis?0.5:0.22);raf=requestAnimationFrame(tick)}else current=target;
+  draw(current)}
 function loadFrames(){
   /* coarse frames first so scrubbing works early, then fill the gaps */
-  const order=[];const seen=new Set();for(const step of [24,12,6,3,1])for(let i=0;i<FRAMES;i+=step)if(!seen.has(i)){seen.add(i);order.push(i)}
+  const order=[];const seen=new Set();for(const step of [32,16,8,4,2,1])for(let i=0;i<FRAMES;i+=step)if(!seen.has(i)){seen.add(i);order.push(i)}
   if(!seen.has(FRAMES-1))order.splice(1,0,FRAMES-1);
   let next=0;loader.classList.add('on');
-  const one=()=>{if(next>=order.length)return Promise.resolve();const i=order[next++];const im=new Image();im.src=frameUrl(i);
-    return im.decode().then(()=>{imgs[i]=im;loadedCount++;ring.style.strokeDashoffset=62.8*(1-loadedCount/FRAMES);
-      if(!ready&&imgs[0]){ready=true;sizeCanvas();draw(Math.round(current));cv.classList.add('ready');onScroll()}
-      else if(raf===0)draw(Math.round(current))}).catch(()=>{}).then(one)};
+  const one=()=>{if(next>=order.length)return Promise.resolve();const i=order[next++];const im=new Image();
+    const loaded=new Promise(res=>{im.onload=im.onerror=res});im.src=frameUrl(i);
+    /* decode() can hang in a background tab, so never wait on it for long */
+    return loaded.then(()=>Promise.race([im.decode().catch(()=>{}),new Promise(r=>setTimeout(r,300))])).then(()=>{if(!im.naturalWidth)throw 0;imgs[i]=im;loadedCount++;ring.style.strokeDashoffset=62.8*(1-loadedCount/FRAMES);
+      if(!ready&&imgs[0]){ready=true;sizeCanvas();draw(current);cv.classList.add('ready');onScroll()}
+      else if(raf===0){drawn=-1;draw(current)}}).catch(()=>{}).then(one)};
   Promise.all(Array.from({length:6},one)).then(()=>loader.classList.remove('on'));
 }
 function initDesktop(){vid.remove();loadFrames();addEventListener('resize',sizeCanvas)}
