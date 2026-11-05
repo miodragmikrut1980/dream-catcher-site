@@ -49,18 +49,22 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);f
 img,video,svg{display:block;max-width:100%}
 img{height:auto}
 a{color:inherit}
+html.lenis,html.lenis body{height:auto}
+html.lenis{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:clip}
+.lenis [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-smooth iframe{pointer-events:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
 .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;z-index:100}
 .skip:focus{left:8px}
 
 /* background environment: faint paper grain, fixed */
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
-  background-image:radial-gradient(rgb(30 42 34 / .06) 1px,transparent 1px);background-size:3px 3px}
+main{background-image:radial-gradient(rgb(30 42 34 / .022) 1px,transparent 1px);background-size:3px 3px}
 
 /* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
   padding:18px var(--gutter);color:var(--paper);transition:background .5s var(--ease),color .5s var(--ease),padding .5s var(--ease)}
-.nav.solid{background:rgb(243 238 228 / .92);color:var(--ink);backdrop-filter:blur(8px);padding:12px var(--gutter);border-bottom:1px solid var(--line)}
+.nav.solid{background:rgb(243 238 228 / .97);color:var(--ink);padding:12px var(--gutter);border-bottom:1px solid var(--line)}
 .brand{font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:.02em;text-decoration:none;display:flex;align-items:center;gap:10px;min-height:44px}
 .brand svg{width:30px;height:20px}
 .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;font-weight:500;letter-spacing:.04em}
@@ -488,7 +492,7 @@ body.shot .verify::after{content:none}
   </button>
 </nav>
 
-<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Meni" hidden>
+<div class="menu" id="menu" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Meni" hidden>
   <div class="menu-inner">
     <div class="menu-top">
       <span class="brand menu-brand">Dream Catcher</span>
@@ -756,12 +760,17 @@ body.shot .verify::after{content:none}
   <p class="demo-note">Ovo je predlog sajta, napravljen kao demo. Fotografije su ilustracija, generisane veštačkom inteligencijom, i biće zamenjene pravim fotografijama štale.</p>
 </footer>
 
+<script src="assets/lenis.min.js"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const saveData=navigator.connection&&navigator.connection.saveData;
 const phone=matchMedia('(max-width:767px)').matches;
+/* smooth wheel scrolling on desktop (mouse wheels move in steps of ~100px, which reads as stutter) */
+let lenis=null;
+if(!reduce&&!phone&&window.Lenis){try{lenis=new Lenis({lerp:0.1,smoothWheel:true,autoRaf:true,anchors:{offset:-72}})}catch(e){lenis=null}}
+const goTo=el=>{if(!el)return;if(lenis)lenis.scrollTo(el,{offset:-72});else el.scrollIntoView({behavior:reduce?'auto':'smooth'})};
 const nav=$('#nav'),stage=$('#stage'),hero=$('.hero'),vid=$('#vid'),bands=[...document.querySelectorAll('.band')],
       prog=$('#prog'),cue=$('#cue'),loader=$('#loader'),ring=$('#ring');
 
@@ -789,7 +798,7 @@ function draw(i){const k=nearest(i);if(k<0||k===drawn)return;const im=imgs[k];
   const cw=cv.width,ch=cv.height,iw=im.naturalWidth,ih=im.naturalHeight,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;
   ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh);drawn=k}
 function tick(){raf=0;const d=target-current;
-  if(Math.abs(d)>0.02){current+=d*0.22;raf=requestAnimationFrame(tick)}else current=target;
+  if(Math.abs(d)>0.02){current+=d*(lenis?0.5:0.22);raf=requestAnimationFrame(tick)}else current=target;
   draw(Math.round(current))}
 function loadFrames(){
   /* coarse frames first so scrubbing works early, then fill the gaps */
@@ -815,12 +824,15 @@ async function initPhone(){
 }
 
 function onScroll(){
+  const p=phone?0:heroProgress();
   setNav();
   if(phone)return;
-  const p=heroProgress();showBands(p);
+  showBands(p);
   if(ready){target=p*(FRAMES-1);if(!raf)raf=requestAnimationFrame(tick)}
 }
-addEventListener('scroll',onScroll,{passive:true});
+let schedScroll=false;
+const onScrollFrame=()=>{schedScroll=false;onScroll();if(typeof lines==='function'&&!reduce)lines()};
+addEventListener('scroll',()=>{if(!schedScroll){schedScroll=true;requestAnimationFrame(onScrollFrame)}},{passive:true});
 addEventListener('resize',onScroll);
 
 if(reduce||saveData){
@@ -841,7 +853,7 @@ function lines(){
   const sr=story.getBoundingClientRect();const sp=Math.min(1,Math.max(0,(vh-sr.top)/(sr.height+vh*.4)));path.style.strokeDashoffset=L*(1-sp);
   const st=steps.getBoundingClientRect();if(st.top<vh*.8)steps.style.setProperty('--p',1);
 }
-if(!reduce){addEventListener('scroll',()=>requestAnimationFrame(lines),{passive:true});lines()}else{path.style.strokeDashoffset=0;steps.style.setProperty('--p',1)}
+if(!reduce){lines()}else{path.style.strokeDashoffset=0;steps.style.setProperty('--p',1)}
 
 
 /* ---------- RESULTS: official wins (Srpski kasački savez), newest first ---------- */
@@ -895,7 +907,7 @@ const RESULTS=[
   yearSeg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;year=b.dataset.year;yearSeg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-checked',String(x===b)));render()});
   yearSeg.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;const bs=[...yearSeg.querySelectorAll('button')];const i=bs.findIndex(x=>x.getAttribute('aria-checked')==='true');const n=bs[(i+(e.key==='ArrowRight'?1:bs.length-1))%bs.length];n.focus();n.click()});
   horseSel.addEventListener('change',render);
-  more.addEventListener('click',()=>{const was=all;all=!all;render();if(was)$('#rezultati').scrollIntoView({behavior:reduce?'auto':'smooth'})});
+  more.addEventListener('click',()=>{const was=all;all=!all;render();if(was)goTo($('#rezultati'))});
   render();
 })();
 
@@ -937,17 +949,17 @@ const STREAM={
   if(typeof RESULTS!=='undefined'&&RESULTS.length){const r=RESULTS[0];const [y,m,d]=r[0].split('-');
     $('#ms-last').textContent=r[1];$('#ms-last-meta').textContent=`${d}.${m}.${y}. · ${r[3]}${r[6]?' · '+r[6]:''}`}
   const focusables=()=>[...menu.querySelectorAll('a[href],button')];
-  function open(){lastFocus=document.activeElement;menu.hidden=false;document.body.classList.add('menu-lock');btn.setAttribute('aria-expanded','true');
+  function open(){lastFocus=document.activeElement;if(lenis)lenis.stop();menu.hidden=false;document.body.classList.add('menu-lock');btn.setAttribute('aria-expanded','true');
     items.forEach((li,i)=>li.style.transitionDelay=(reduce?0:60+i*45)+'ms');
     requestAnimationFrame(()=>requestAnimationFrame(()=>menu.classList.add('open')));close.focus()}
-  function shut(focusBack=true){menu.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.classList.remove('menu-lock');
+  function shut(focusBack=true){if(lenis)lenis.start();menu.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.classList.remove('menu-lock');
     items.forEach(li=>li.style.transitionDelay='0ms');
     const done=()=>{menu.hidden=true};reduce?done():setTimeout(done,420);
     if(focusBack&&lastFocus)lastFocus.focus()}
   btn.addEventListener('click',open);
   close.addEventListener('click',()=>shut());
   menu.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();const t=document.querySelector(a.getAttribute('href'));shut(false);
-    setTimeout(()=>{if(t){t.scrollIntoView({behavior:reduce?'auto':'smooth'});t.setAttribute('tabindex','-1');t.focus({preventScroll:true})}},reduce?0:200)});
+    setTimeout(()=>{if(t){goTo(t);t.setAttribute('tabindex','-1');t.focus({preventScroll:true})}},reduce?0:200)});
   document.addEventListener('keydown',e=>{if(menu.hidden)return;
     if(e.key==='Escape'){e.preventDefault();shut()}
     if(e.key==='Tab'){const f=focusables();const first=f[0],last=f[f.length-1];
