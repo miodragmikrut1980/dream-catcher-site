@@ -171,7 +171,7 @@ body.menu-lock{overflow:hidden}
 .replay{position:absolute;right:calc(var(--gutter) + 96px);bottom:calc(5vh + 14px);z-index:3;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13px;font-weight:600;letter-spacing:.05em;color:var(--paper);background:rgb(20 28 23 / .35);border:1px solid rgb(243 238 228 / .5);border-radius:999px;padding:0 16px;min-height:44px;cursor:pointer;backdrop-filter:blur(4px);transition:background .3s var(--ease)}
 .replay:hover{background:rgb(20 28 23 / .6)}
 .replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:767px){.replay{bottom:calc(6svh + 70px + env(safe-area-inset-bottom,0px));right:var(--gutter);top:auto}.band-4 .btn{margin-right:130px}}
+@media (max-width:767px){.replay{bottom:calc(6svh + 66px + env(safe-area-inset-bottom,0px));right:var(--gutter);width:48px;height:48px;padding:0;justify-content:center}.replay-t{display:none}.replay svg{width:20px;height:20px}}
 .progress{position:absolute;left:0;bottom:0;height:2px;background:var(--sand);width:100%;transform:scaleX(0);transform-origin:left;opacity:.8;will-change:transform}
 .loader{position:absolute;top:22px;right:calc(var(--gutter) + 160px);width:22px;height:22px;opacity:0;transition:opacity .4s}
 .loader.on{opacity:.8}
@@ -548,7 +548,7 @@ body.shot .verify::after{content:none}
     </div>
 
     <div class="scroll-cue" id="cue" aria-hidden="true">SKROLUJ<i></i></div>
-    <button type="button" class="replay" id="replay" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>Pusti ponovo</button>
+    <button type="button" class="replay" id="replay" aria-label="Pusti uvod ponovo" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg><span class="replay-t">Pusti ponovo</span></button>
     <svg class="loader" id="loader" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="rgb(243 238 228 / .25)" stroke-width="2"/><circle id="ring" cx="12" cy="12" r="10" fill="none" stroke="#C9A86A" stroke-width="2" stroke-dasharray="62.8" stroke-dashoffset="62.8" transform="rotate(-90 12 12)"/></svg>
     <div class="progress" id="prog"></div>
   </div>
