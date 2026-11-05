@@ -459,14 +459,22 @@ footer p{margin:0 0 6px}
 body.shot .verify{outline:0}
 body.shot .verify::after{content:none}
 
-/* PHONE HERO */
+/* PHONE HERO: a square film frame on top, the words on dark ground below it (no text over the horse) */
 @media (max-width:767px){
+  :root{--mt:124px;--sq:100vw;--panel:268px}
   .hero{height:auto}
-  .hero-stage{position:relative;height:100svh;min-height:560px}
-  .band,.band-1,.band-2,.band-3,.band-4{bottom:calc(6svh + 64px + env(safe-area-inset-bottom,0px));left:var(--gutter);right:var(--gutter);max-width:none}
-  .hero h1{font-size:clamp(58px,17vw,86px)}
-  .band-line{font-size:clamp(34px,9.6vw,46px)}
-  .hero-scrim{background:linear-gradient(180deg,rgb(20 28 23 / .6) 0%,rgb(20 28 23 / 0) 26%,rgb(20 28 23 / 0) 45%,rgb(20 28 23 / .85) 100%)}
+  .hero-stage{position:relative;height:calc(var(--mt) + var(--sq) + var(--panel));min-height:0}
+  .hero-stage > .hero-media,.hero-stage > picture > .hero-media,.hero-end{top:var(--mt);bottom:auto;height:var(--sq)}
+  .hero-stage .hero-end > img{top:0;height:100%}
+  .hero-scrim{top:var(--mt);bottom:auto;height:var(--sq);background:linear-gradient(180deg,rgb(30 42 34 / 0) 62%,var(--ink) 100%)}
+  .band,.band-1,.band-2,.band-3,.band-4{top:calc(var(--mt) + var(--sq) + 8px);bottom:auto;left:var(--gutter);right:var(--gutter);max-width:none;text-shadow:none}
+  .band-2,.band-3{top:calc(var(--mt) + var(--sq) - 18px)}
+  .hero h1{font-size:clamp(54px,16vw,80px)}
+  .band-line{font-size:clamp(32px,9vw,44px)}
+  .band-4 .k-end{margin-bottom:8px}
+  .band-4 .b-end{margin-top:18px}
+  .replay{top:calc(var(--mt) + var(--sq) - 62px);bottom:auto}
+  .progress{display:none}
   .scroll-cue{display:none}
   body{font-size:16px}
 }
@@ -581,7 +589,7 @@ body.shot .verify::after{content:none}
 
 <div class="hero" id="top">
   <div class="hero-stage" id="stage">
-    <img class="hero-media" id="poster" src="assets/poster.jpg" alt="Hodnik stare štale u zoru, vrata otvorena ka peščanoj stazi u izmaglici" fetchpriority="high">
+    <picture><source media="(max-width:767px)" srcset="assets/poster-phone.jpg"><img class="hero-media" id="poster" src="assets/poster.jpg" alt="Hodnik stare štale u zoru, vrata otvorena ka peščanoj stazi u izmaglici" fetchpriority="high"></picture>
     <video class="hero-media hero-video" id="vid" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
     <picture class="hero-end" id="heroEnd" aria-hidden="true"><source media="(max-width:767px)" srcset="assets/end-phone.jpg"><img class="hero-media" src="assets/end-4k.jpg" alt="" decoding="async"></picture>
     <div class="hero-scrim"></div>
