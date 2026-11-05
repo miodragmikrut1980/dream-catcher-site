@@ -146,6 +146,8 @@ body.menu-lock{overflow:hidden}
 .hero-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero-video{opacity:0;transition:opacity .8s var(--ease)}
 .hero-video.ready{opacity:1}
+.hero-canvas{opacity:0;transition:opacity .8s var(--ease);display:block}
+.hero-canvas.ready{opacity:1}
 .hero-scrim{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,rgb(20 28 23 / .55) 0%,rgb(20 28 23 / .05) 32%,rgb(20 28 23 / .05) 55%,rgb(20 28 23 / .8) 100%),linear-gradient(90deg,rgb(20 28 23 / .35),transparent 55%)}
 .band{position:absolute;left:var(--gutter);right:var(--gutter);color:var(--paper);opacity:0;transform:translateY(18px);
@@ -167,7 +169,7 @@ body.menu-lock{overflow:hidden}
 .scroll-cue{position:absolute;right:var(--gutter);bottom:5vh;font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--paper);opacity:.75;display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .5s}
 .scroll-cue i{width:1px;height:46px;background:linear-gradient(var(--sand),transparent);animation:cue 2.4s var(--ease-soft) infinite}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-.progress{position:absolute;left:0;bottom:0;height:2px;background:var(--sand);width:0;opacity:.8}
+.progress{position:absolute;left:0;bottom:0;height:2px;background:var(--sand);width:100%;transform:scaleX(0);transform-origin:left;opacity:.8;will-change:transform}
 .loader{position:absolute;top:22px;right:calc(var(--gutter) + 160px);width:22px;height:22px;opacity:0;transition:opacity .4s}
 .loader.on{opacity:.8}
 @media (max-width:860px){.loader{right:var(--gutter);top:76px}}
@@ -528,6 +530,7 @@ body.shot .verify::after{content:none}
   <div class="hero-stage" id="stage">
     <img class="hero-media" id="poster" src="assets/poster.jpg" alt="Hodnik stare štale u zoru, vrata otvorena ka peščanoj stazi u izmaglici" fetchpriority="high">
     <video class="hero-media hero-video" id="vid" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <canvas class="hero-media hero-canvas" id="cv" aria-hidden="true"></canvas>
     <div class="hero-scrim"></div>
 
     <div class="band band-1" data-from="0" data-to=".22">
@@ -770,35 +773,38 @@ let lastP=-1;
 function showBands(p){
   if(Math.abs(p-lastP)<.002)return;lastP=p;
   bands.forEach(b=>{const on=p>=+b.dataset.from&&p<+b.dataset.to;if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
-  prog.style.width=(p*100).toFixed(2)+'%';
+  prog.style.transform=`scaleX(${p.toFixed(4)})`;
   cue.style.opacity=p>.04?0:.75;
 }
 function heroProgress(){const r=hero.getBoundingClientRect();const total=hero.offsetHeight-innerHeight;return Math.min(1,Math.max(0,-r.top/Math.max(1,total)))}
 
-/* video loading */
-let ready=false,dur=6,target=0,shown=0,seeking=false,raf=0;
-async function loadBlob(src){
-  try{
-    const res=await fetch(src);if(!res.ok)throw 0;
-    const len=+res.headers.get('content-length')||0;const reader=res.body.getReader();const chunks=[];let got=0;
-    loader.classList.add('on');
-    for(;;){const {done,value}=await reader.read();if(done)break;chunks.push(value);got+=value.length;if(len)ring.style.strokeDashoffset=62.8*(1-got/len)}
-    loader.classList.remove('on');
-    return URL.createObjectURL(new Blob(chunks,{type:'video/mp4'}));
-  }catch(e){loader.classList.remove('on');return null}
+/* ---------- DESKTOP HERO: image sequence on canvas (no video decoding while scrolling) ---------- */
+const FRAMES=97,frameUrl=i=>`assets/frames/f${String(i+1).padStart(3,'0')}.webp`;
+const cv=$('#cv'),ctx=cv.getContext('2d',{alpha:false});
+const imgs=new Array(FRAMES).fill(null);let loadedCount=0,ready=false,target=0,current=0,drawn=-1,raf=0;
+function sizeCanvas(){const dpr=Math.min(devicePixelRatio||1,1.5);const w=stage.clientWidth,h=stage.clientHeight;
+  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);drawn=-1;if(ready)draw(Math.round(current))}
+function nearest(i){if(imgs[i])return i;for(let d=1;d<FRAMES;d++){if(i-d>=0&&imgs[i-d])return i-d;if(i+d<FRAMES&&imgs[i+d])return i+d}return -1}
+function draw(i){const k=nearest(i);if(k<0||k===drawn)return;const im=imgs[k];
+  const cw=cv.width,ch=cv.height,iw=im.naturalWidth,ih=im.naturalHeight,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;
+  ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh);drawn=k}
+function tick(){raf=0;const d=target-current;
+  if(Math.abs(d)>0.02){current+=d*0.22;raf=requestAnimationFrame(tick)}else current=target;
+  draw(Math.round(current))}
+function loadFrames(){
+  /* coarse frames first so scrubbing works early, then fill the gaps */
+  const order=[];const seen=new Set();for(const step of [24,12,6,3,1])for(let i=0;i<FRAMES;i+=step)if(!seen.has(i)){seen.add(i);order.push(i)}
+  if(!seen.has(FRAMES-1))order.splice(1,0,FRAMES-1);
+  let next=0;loader.classList.add('on');
+  const one=()=>{if(next>=order.length)return Promise.resolve();const i=order[next++];const im=new Image();im.src=frameUrl(i);
+    return im.decode().then(()=>{imgs[i]=im;loadedCount++;ring.style.strokeDashoffset=62.8*(1-loadedCount/FRAMES);
+      if(!ready&&imgs[0]){ready=true;sizeCanvas();draw(Math.round(current));cv.classList.add('ready');onScroll()}
+      else if(raf===0)draw(Math.round(current))}).catch(()=>{}).then(one)};
+  Promise.all(Array.from({length:6},one)).then(()=>loader.classList.remove('on'));
 }
-function tick(){
-  raf=0;
-  const d=target-shown;
-  if(Math.abs(d)>0.004){shown+=d*0.16;if(!seeking){seeking=true;vid.currentTime=shown}raf=requestAnimationFrame(tick)}
-}
-vid.addEventListener('seeked',()=>{seeking=false});
-
-async function initDesktop(){
-  const url=await loadBlob('assets/hero.mp4');if(!url)return;
-  vid.src=url;vid.addEventListener('loadedmetadata',()=>{dur=vid.duration;ready=true;vid.classList.add('ready');onScroll()},{once:true});
-}
+function initDesktop(){vid.remove();loadFrames();addEventListener('resize',sizeCanvas)}
 async function initPhone(){
+  cv.remove();
   vid.src='assets/hero-mobile.mp4';vid.preload='auto';
   vid.addEventListener('canplay',()=>{vid.classList.add('ready');vid.play().catch(()=>{})},{once:true});
   // phone: bands follow playback time
@@ -812,13 +818,13 @@ function onScroll(){
   setNav();
   if(phone)return;
   const p=heroProgress();showBands(p);
-  if(ready){target=p*(dur-0.05);if(!raf)raf=requestAnimationFrame(tick)}
+  if(ready){target=p*(FRAMES-1);if(!raf)raf=requestAnimationFrame(tick)}
 }
 addEventListener('scroll',onScroll,{passive:true});
 addEventListener('resize',onScroll);
 
 if(reduce||saveData){
-  $('#poster').src='assets/end.jpg';hero.style.height='100svh';bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
+  $('#poster').src='assets/end.jpg';hero.style.height='100svh';vid.remove();cv.remove();bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
   $('.band-1').style.bottom='34vh';
 }else if(phone){initPhone()}else{initDesktop();showBands(0)}
 setNav();
