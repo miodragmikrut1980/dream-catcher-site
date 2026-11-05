@@ -823,7 +823,7 @@ const setNav=()=>nav.classList.toggle('solid',scrollY>innerHeight*.6);
 /* bands */
 
 /* ---------- HERO: the film plays once on load, captions follow the playback, then it rests on the last frame ---------- */
-const TIMES=[[0.2,2.0],[2.3,4.1],[4.5,Infinity]];
+const TIMES=[[0.2,2.3],[2.6,4.6],[5.1,Infinity]];
 const replay=$('#replay');
 function showAt(t){bands.forEach((b,i)=>{const on=t>=TIMES[i][0]&&t<TIMES[i][1];if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
   cue.style.opacity=t<5.5?0:.75}
