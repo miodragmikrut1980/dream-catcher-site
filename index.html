@@ -163,6 +163,16 @@ body.menu-lock{overflow:hidden}
 .hero h1{font-family:var(--display);font-weight:600;font-size:clamp(64px,11vw,168px);line-height:.88;margin:0;letter-spacing:-.01em}
 .band-line{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(38px,5.6vw,76px);line-height:1.02;margin:0}
 .band-4 .band-line{font-style:normal;font-weight:600}
+/* the name writes itself in at the end of the film */
+.band-4{transform:none}
+.band-4 .ch{display:inline-block;opacity:0;transform:translateY(.32em);filter:blur(8px);
+  transition:opacity .8s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:calc(var(--i,0)*55ms + var(--j,0)*55ms + var(--d,0ms))}
+.band-4 .w2 .ch{--d:280ms}
+.band-4.on .ch{opacity:1;transform:none;filter:none}
+.band-4 .k-end,.band-4 .b-end{opacity:0;transform:translateY(10px);transition:opacity .7s var(--ease),transform .8s var(--ease);transition-delay:1.05s}
+.band-4.on .k-end,.band-4.on .b-end{opacity:1;transform:none}
+.band-4 .k-end{margin:0 0 12px}
+.band-4 .b-end{margin-top:24px}
 .btn{display:inline-flex;align-items:center;gap:12px;background:var(--gold);color:#fff;text-decoration:none;font-weight:600;font-size:15px;letter-spacing:.05em;
   padding:16px 26px;border-radius:999px;border:0;cursor:pointer;min-height:48px;transition:transform .3s var(--ease),background .3s var(--ease),box-shadow .3s var(--ease);margin-top:26px;font-family:var(--body);text-shadow:none}
 .btn:hover{transform:translateY(-2px);background:var(--gold-deep);box-shadow:0 12px 30px rgb(154 107 31 / .32)}
@@ -173,6 +183,7 @@ body.menu-lock{overflow:hidden}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .replay{position:absolute;right:calc(var(--gutter) + 96px);bottom:calc(5vh + 14px);z-index:3;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13px;font-weight:600;letter-spacing:.05em;color:var(--paper);background:rgb(20 28 23 / .35);border:1px solid rgb(243 238 228 / .5);border-radius:999px;padding:0 16px;min-height:44px;cursor:pointer;backdrop-filter:blur(4px);transition:background .3s var(--ease)}
 .replay:hover{background:rgb(20 28 23 / .6)}
+.replay[hidden]{display:none}
 .replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:767px){.replay{bottom:calc(6svh + 66px + env(safe-area-inset-bottom,0px));right:var(--gutter);width:48px;height:48px;padding:0;justify-content:center}.replay-t{display:none}.replay svg{width:20px;height:20px}}
 .progress{position:absolute;left:0;bottom:0;height:2px;background:var(--sand);width:100%;transform:scaleX(0);transform-origin:left;opacity:.8;will-change:transform}
@@ -575,16 +586,12 @@ body.shot .verify::after{content:none}
     <picture class="hero-end" id="heroEnd" aria-hidden="true"><source media="(max-width:767px)" srcset="assets/end-phone.jpg"><img class="hero-media" src="assets/end-4k.jpg" alt="" decoding="async"></picture>
     <div class="hero-scrim"></div>
 
-    <div class="band band-1" data-from="0" data-to=".22">
-      <p class="kicker">Kasačka štala · Sombor</p>
-      <h1>Dream<br>Catcher</h1>
-    </div>
-    <div class="band band-2" data-from=".28" data-to=".55"><p class="band-line">Svako jutro<br>počinje u štali.</p></div>
-    <div class="band band-3" data-from=".60" data-to=".85"><p class="band-line">A završava se<br>na stazi.</p></div>
-    <div class="band band-4" data-from=".88" data-to="1.01">
-      <p class="kicker">Sezona 2027.</p>
-      <p class="band-line">Pratite naše trke.</p>
-      <a class="btn" href="#trke">Kalendar sezone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="band band-2"><p class="band-line">Svako jutro<br>počinje u štali.</p></div>
+    <div class="band band-3"><p class="band-line">A završava se<br>na stazi.</p></div>
+    <div class="band band-4">
+      <p class="kicker k-end">Kasačka štala · Sombor</p>
+      <h1 aria-label="Dream Catcher"><span class="w" aria-hidden="true"><span class="ch" style="--i:0">D</span><span class="ch" style="--i:1">r</span><span class="ch" style="--i:2">e</span><span class="ch" style="--i:3">a</span><span class="ch" style="--i:4">m</span></span><br><span class="w w2" aria-hidden="true"><span class="ch" style="--j:0">C</span><span class="ch" style="--j:1">a</span><span class="ch" style="--j:2">t</span><span class="ch" style="--j:3">c</span><span class="ch" style="--j:4">h</span><span class="ch" style="--j:5">e</span><span class="ch" style="--j:6">r</span></span></h1>
+      <a class="btn b-end" href="#trke">Kalendar sezone <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
 
     <div class="scroll-cue" id="cue" aria-hidden="true">SKROLUJ<i></i></div>
@@ -816,7 +823,7 @@ const setNav=()=>nav.classList.toggle('solid',scrollY>innerHeight*.6);
 /* bands */
 
 /* ---------- HERO: the film plays once on load, captions follow the playback, then it rests on the last frame ---------- */
-const TIMES=[[0,1.6],[1.9,3.5],[3.7,5.3],[5.5,Infinity]];
+const TIMES=[[0.2,2.1],[2.4,4.3],[4.6,Infinity]];
 const replay=$('#replay');
 function showAt(t){bands.forEach((b,i)=>{const on=t>=TIMES[i][0]&&t<TIMES[i][1];if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
   cue.style.opacity=t<5.5?0:.75}
@@ -843,7 +850,6 @@ addEventListener('resize',onScroll);
 
 if(reduce||saveData){
   heroEnd.classList.add('on');vid.remove();bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
-  $('.band-1').style.bottom='34vh';
 }else{initPlay()}
 setNav();
 
