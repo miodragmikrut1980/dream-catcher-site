@@ -49,11 +49,6 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);f
 img,video,svg{display:block;max-width:100%}
 img{height:auto}
 a{color:inherit}
-html.lenis,html.lenis body{height:auto}
-html.lenis{scroll-behavior:auto!important}
-.lenis.lenis-stopped{overflow:clip}
-.lenis [data-lenis-prevent]{overscroll-behavior:contain}
-.lenis.lenis-smooth iframe{pointer-events:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
 .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;z-index:100}
 .skip:focus{left:8px}
@@ -760,17 +755,14 @@ body.shot .verify::after{content:none}
   <p class="demo-note">Ovo je predlog sajta, napravljen kao demo. Fotografije su ilustracija, generisane veštačkom inteligencijom, i biće zamenjene pravim fotografijama štale.</p>
 </footer>
 
-<script src="assets/lenis.min.js"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const saveData=navigator.connection&&navigator.connection.saveData;
 const phone=matchMedia('(max-width:767px)').matches;
-/* smooth wheel scrolling on desktop (mouse wheels move in steps of ~100px, which reads as stutter) */
-let lenis=null;
-if(!reduce&&!phone&&window.Lenis){try{lenis=new Lenis({lerp:0.1,smoothWheel:true,autoRaf:true,anchors:{offset:-72}})}catch(e){lenis=null}}
-const goTo=el=>{if(!el)return;if(lenis)lenis.scrollTo(el,{offset:-72});else el.scrollIntoView({behavior:reduce?'auto':'smooth'})};
+const lenis=null;
+const goTo=el=>{if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth'})};
 const nav=$('#nav'),stage=$('#stage'),hero=$('.hero'),vid=$('#vid'),bands=[...document.querySelectorAll('.band')],
       prog=$('#prog'),cue=$('#cue'),loader=$('#loader'),ring=$('#ring');
 
@@ -789,21 +781,27 @@ function heroProgress(){const r=hero.getBoundingClientRect();const total=hero.of
 
 /* ---------- DESKTOP HERO: image sequence on canvas (no video decoding while scrolling) ---------- */
 const FRAMES=121,frameUrl=i=>`assets/frames/f${String(i+1).padStart(3,'0')}.webp`;
-const cv=$('#cv'),ctx=cv.getContext('2d',{alpha:false});
+const cv=$('#cv'),ctx=cv.getContext('2d',{alpha:false});ctx.imageSmoothingQuality='high';
 const imgs=new Array(FRAMES).fill(null);let loadedCount=0,ready=false,target=0,current=0,drawn=-1,raf=0;
-function sizeCanvas(){const dpr=Math.min(devicePixelRatio||1,1.5);const w=stage.clientWidth,h=stage.clientHeight;
-  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);drawn=-1;if(ready)draw(current)}
+function sizeCanvas(){const dpr=Math.min(devicePixelRatio||1,2);const w=stage.clientWidth,h=stage.clientHeight;
+  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);ctx.imageSmoothingQuality='high';drawn=-1;if(ready)draw(current)}
 function nearest(i){if(imgs[i])return i;for(let d=1;d<FRAMES;d++){if(i-d>=0&&imgs[i-d])return i-d;if(i+d<FRAMES&&imgs[i+d])return i+d}return -1}
 /* draw a fractional position: frame k, then frame k+1 blended on top, so motion flows between frames */
-function paint(im,a){const cw=cv.width,ch=cv.height,iw=im.naturalWidth,ih=im.naturalHeight,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;
+const bmp=new Map(),pend=new Set();let winAt=-99;
+function keepWindow(c){if(!window.createImageBitmap)return;winAt=c;
+  for(let k=Math.max(0,c-10);k<=Math.min(FRAMES-1,c+14);k++){if(imgs[k]&&!bmp.has(k)&&!pend.has(k)){pend.add(k);
+    createImageBitmap(imgs[k]).then(b=>{pend.delete(k);if(Math.abs(k-winAt)>24){b.close();return}bmp.set(k,b)}).catch(()=>pend.delete(k))}}
+  for(const [k,b] of bmp){if(k<c-18||k>c+22){b.close();bmp.delete(k)}}}
+function paint(im,a){const cw=cv.width,ch=cv.height,iw=im.naturalWidth||im.width,ih=im.naturalHeight||im.height,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;
   ctx.globalAlpha=a;ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh)}
 function draw(pos){const key=Math.round(pos*64);if(key===drawn)return;
   const k0=Math.floor(pos),t=pos-k0,a=nearest(k0);if(a<0)return;
-  paint(imgs[a],1);
-  const k1=Math.min(FRAMES-1,k0+1);if(t>0.01&&k1!==k0&&imgs[k1])paint(imgs[k1],t);
+  keepWindow(k0);
+  paint(bmp.get(a)||imgs[a],1);
+  const k1=Math.min(FRAMES-1,k0+1);if(t>0.01&&k1!==k0&&imgs[k1])paint(bmp.get(k1)||imgs[k1],t);
   ctx.globalAlpha=1;drawn=key}
 function tick(){raf=0;const d=target-current;
-  if(Math.abs(d)>0.005){current+=d*(lenis?0.5:0.22);raf=requestAnimationFrame(tick)}else current=target;
+  if(Math.abs(d)>0.002){current+=d*0.38;raf=requestAnimationFrame(tick)}else current=target;
   draw(current)}
 function loadFrames(){
   /* coarse frames first so scrubbing works early, then fill the gaps */
@@ -830,12 +828,14 @@ async function initPhone(){
   vid.addEventListener('ended',()=>{bands.forEach((b,i)=>b.classList.toggle('on',i===3))});
 }
 
+let settleT=0;
+function settle(){if(!ready)return;target=Math.round(target);if(!raf)raf=requestAnimationFrame(tick)}
 function onScroll(){
   const p=phone?0:heroProgress();
   setNav();
   if(phone)return;
   showBands(p);
-  if(ready){target=p*(FRAMES-1);if(!raf)raf=requestAnimationFrame(tick)}
+  if(ready){target=p*(FRAMES-1);if(!raf)raf=requestAnimationFrame(tick);clearTimeout(settleT);settleT=setTimeout(settle,120)}
 }
 let schedScroll=false;
 const onScrollFrame=()=>{schedScroll=false;onScroll();if(typeof lines==='function'&&!reduce)lines()};
