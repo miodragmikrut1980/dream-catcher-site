@@ -140,7 +140,7 @@ body.menu-lock{overflow:hidden}
 }
 
 /* HERO */
-.hero{position:relative;height:420vh;z-index:1}
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;z-index:1}
 .hero-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--ink)}
 .hero-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero-video{opacity:0;transition:opacity .8s var(--ease)}
@@ -168,6 +168,10 @@ body.menu-lock{overflow:hidden}
 .scroll-cue{position:absolute;right:var(--gutter);bottom:5vh;font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--paper);opacity:.75;display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .5s}
 .scroll-cue i{width:1px;height:46px;background:linear-gradient(var(--sand),transparent);animation:cue 2.4s var(--ease-soft) infinite}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.replay{position:absolute;right:calc(var(--gutter) + 96px);bottom:calc(5vh + 14px);z-index:3;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13px;font-weight:600;letter-spacing:.05em;color:var(--paper);background:rgb(20 28 23 / .35);border:1px solid rgb(243 238 228 / .5);border-radius:999px;padding:0 16px;min-height:44px;cursor:pointer;backdrop-filter:blur(4px);transition:background .3s var(--ease)}
+.replay:hover{background:rgb(20 28 23 / .6)}
+.replay svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:767px){.replay{bottom:calc(6svh + 70px + env(safe-area-inset-bottom,0px));right:var(--gutter);top:auto}.band-4 .btn{margin-right:130px}}
 .progress{position:absolute;left:0;bottom:0;height:2px;background:var(--sand);width:100%;transform:scaleX(0);transform-origin:left;opacity:.8;will-change:transform}
 .loader{position:absolute;top:22px;right:calc(var(--gutter) + 160px);width:22px;height:22px;opacity:0;transition:opacity .4s}
 .loader.on{opacity:.8}
@@ -529,7 +533,6 @@ body.shot .verify::after{content:none}
   <div class="hero-stage" id="stage">
     <img class="hero-media" id="poster" src="assets/poster.jpg" alt="Hodnik stare štale u zoru, vrata otvorena ka peščanoj stazi u izmaglici" fetchpriority="high">
     <video class="hero-media hero-video" id="vid" muted playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
-    <canvas class="hero-media hero-canvas" id="cv" aria-hidden="true"></canvas>
     <div class="hero-scrim"></div>
 
     <div class="band band-1" data-from="0" data-to=".22">
@@ -545,6 +548,7 @@ body.shot .verify::after{content:none}
     </div>
 
     <div class="scroll-cue" id="cue" aria-hidden="true">SKROLUJ<i></i></div>
+    <button type="button" class="replay" id="replay" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>Pusti ponovo</button>
     <svg class="loader" id="loader" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="rgb(243 238 228 / .25)" stroke-width="2"/><circle id="ring" cx="12" cy="12" r="10" fill="none" stroke="#C9A86A" stroke-width="2" stroke-dasharray="62.8" stroke-dashoffset="62.8" transform="rotate(-90 12 12)"/></svg>
     <div class="progress" id="prog"></div>
   </div>
@@ -767,85 +771,36 @@ const nav=$('#nav'),stage=$('#stage'),hero=$('.hero'),vid=$('#vid'),bands=[...do
       prog=$('#prog'),cue=$('#cue'),loader=$('#loader'),ring=$('#ring');
 
 /* nav */
-const setNav=()=>nav.classList.toggle('solid',scrollY>innerHeight*(phone?.6:3.6));
+const setNav=()=>nav.classList.toggle('solid',scrollY>innerHeight*.6);
 
 /* bands */
-let lastP=-1;
-function showBands(p){
-  if(Math.abs(p-lastP)<.002)return;lastP=p;
-  bands.forEach(b=>{const on=p>=+b.dataset.from&&p<+b.dataset.to;if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
-  prog.style.transform=`scaleX(${p.toFixed(4)})`;
-  cue.style.opacity=p>.04?0:.75;
-}
-function heroProgress(){const r=hero.getBoundingClientRect();const total=hero.offsetHeight-innerHeight;return Math.min(1,Math.max(0,-r.top/Math.max(1,total)))}
 
-/* ---------- DESKTOP HERO: image sequence on canvas (no video decoding while scrolling) ---------- */
-const FRAMES=121,frameUrl=i=>`assets/frames/f${String(i+1).padStart(3,'0')}.webp`;
-const cv=$('#cv'),ctx=cv.getContext('2d',{alpha:false});ctx.imageSmoothingQuality='high';
-const imgs=new Array(FRAMES).fill(null);let loadedCount=0,ready=false,target=0,current=0,drawn=-1,raf=0;
-function sizeCanvas(){const dpr=Math.min(devicePixelRatio||1,2);const w=stage.clientWidth,h=stage.clientHeight;
-  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);ctx.imageSmoothingQuality='high';drawn=-1;if(ready)draw(current)}
-function nearest(i){if(imgs[i])return i;for(let d=1;d<FRAMES;d++){if(i-d>=0&&imgs[i-d])return i-d;if(i+d<FRAMES&&imgs[i+d])return i+d}return -1}
-/* draw a fractional position: frame k, then frame k+1 blended on top, so motion flows between frames */
-const bmp=new Map(),pend=new Set();let winAt=-99;
-function keepWindow(c){if(!window.createImageBitmap)return;winAt=c;
-  for(let k=Math.max(0,c-10);k<=Math.min(FRAMES-1,c+14);k++){if(imgs[k]&&!bmp.has(k)&&!pend.has(k)){pend.add(k);
-    createImageBitmap(imgs[k]).then(b=>{pend.delete(k);if(Math.abs(k-winAt)>24){b.close();return}bmp.set(k,b)}).catch(()=>pend.delete(k))}}
-  for(const [k,b] of bmp){if(k<c-18||k>c+22){b.close();bmp.delete(k)}}}
-function paint(im,a){const cw=cv.width,ch=cv.height,iw=im.naturalWidth||im.width,ih=im.naturalHeight||im.height,sc=Math.max(cw/iw,ch/ih),dw=iw*sc,dh=ih*sc;
-  ctx.globalAlpha=a;ctx.drawImage(im,(cw-dw)/2,(ch-dh)/2,dw,dh)}
-function draw(pos){const key=Math.round(pos*64);if(key===drawn)return;
-  const k0=Math.floor(pos),t=pos-k0,a=nearest(k0);if(a<0)return;
-  keepWindow(k0);
-  paint(bmp.get(a)||imgs[a],1);
-  const k1=Math.min(FRAMES-1,k0+1);if(t>0.01&&k1!==k0&&imgs[k1])paint(bmp.get(k1)||imgs[k1],t);
-  ctx.globalAlpha=1;drawn=key}
-function tick(){raf=0;const d=target-current;
-  if(Math.abs(d)>0.002){current+=d*0.38;raf=requestAnimationFrame(tick)}else current=target;
-  draw(current)}
-function loadFrames(){
-  /* coarse frames first so scrubbing works early, then fill the gaps */
-  const order=[];const seen=new Set();for(const step of [32,16,8,4,2,1])for(let i=0;i<FRAMES;i+=step)if(!seen.has(i)){seen.add(i);order.push(i)}
-  if(!seen.has(FRAMES-1))order.splice(1,0,FRAMES-1);
-  let next=0;loader.classList.add('on');
-  const one=()=>{if(next>=order.length)return Promise.resolve();const i=order[next++];const im=new Image();
-    const loaded=new Promise(res=>{im.onload=im.onerror=res});im.src=frameUrl(i);
-    /* decode() can hang in a background tab, so never wait on it for long */
-    return loaded.then(()=>Promise.race([im.decode().catch(()=>{}),new Promise(r=>setTimeout(r,300))])).then(()=>{if(!im.naturalWidth)throw 0;imgs[i]=im;loadedCount++;ring.style.strokeDashoffset=62.8*(1-loadedCount/FRAMES);
-      if(!ready&&imgs[0]){ready=true;sizeCanvas();draw(current);cv.classList.add('ready');onScroll()}
-      else if(raf===0){drawn=-1;draw(current)}}).catch(()=>{}).then(one)};
-  Promise.all(Array.from({length:6},one)).then(()=>loader.classList.remove('on'));
+/* ---------- HERO: the film plays once on load, captions follow the playback, then it rests on the last frame ---------- */
+const TIMES=[[0,1.6],[1.9,3.5],[3.7,5.3],[5.5,Infinity]];
+const replay=$('#replay');
+function showAt(t){bands.forEach((b,i)=>{const on=t>=TIMES[i][0]&&t<TIMES[i][1];if(b.classList.contains('on')!==on)b.classList.toggle('on',on)});
+  cue.style.opacity=t<5.5?0:.75}
+function initPlay(){
+  vid.src=phone?'assets/hero-mobile.mp4':'assets/hero.mp4';vid.preload='auto';
+  showAt(0);cue.style.opacity=0;
+  const start=()=>{vid.classList.add('ready');vid.play().catch(()=>{/* autoplay refused: rest on the poster with the last caption */showAt(99);replay.hidden=false})};
+  vid.addEventListener('canplay',start,{once:true});
+  vid.addEventListener('timeupdate',()=>{showAt(vid.currentTime);prog.style.transform=`scaleX(${(vid.currentTime/(vid.duration||6)).toFixed(4)})`});
+  vid.addEventListener('ended',()=>{showAt(99);prog.style.transform='scaleX(1)';replay.hidden=false});
+  replay.addEventListener('click',()=>{replay.hidden=true;vid.currentTime=0;showAt(0);vid.play().catch(()=>{})});
+  /* pause when the hero is off screen, so it doesn't play unseen */
+  new IntersectionObserver(([e])=>{if(!e.isIntersecting&&!vid.paused)vid.pause();else if(e.isIntersecting&&vid.paused&&!vid.ended&&vid.currentTime>0)vid.play().catch(()=>{})},{threshold:.2}).observe(stage);
 }
-function initDesktop(){vid.remove();loadFrames();addEventListener('resize',sizeCanvas)}
-async function initPhone(){
-  cv.remove();
-  vid.src='assets/hero-mobile.mp4';vid.preload='auto';
-  vid.addEventListener('canplay',()=>{vid.classList.add('ready');vid.play().catch(()=>{})},{once:true});
-  // phone: bands follow playback time
-  const order=[[0,1.6],[1.9,3.5],[3.7,5.3],[5.5,99]];
-  bands.forEach((b,i)=>b.classList.toggle('on',i===0));
-  vid.addEventListener('timeupdate',()=>{const t=vid.currentTime;bands.forEach((b,i)=>b.classList.toggle('on',t>=order[i][0]&&t<order[i][1]))});
-  vid.addEventListener('ended',()=>{bands.forEach((b,i)=>b.classList.toggle('on',i===3))});
-}
-
-let settleT=0;
-function settle(){if(!ready)return;target=Math.round(target);if(!raf)raf=requestAnimationFrame(tick)}
-function onScroll(){
-  const p=phone?0:heroProgress();
-  setNav();
-  if(phone)return;
-  showBands(p);
-  if(ready){target=p*(FRAMES-1);if(!raf)raf=requestAnimationFrame(tick);clearTimeout(settleT);settleT=setTimeout(settle,120)}
-}
+function onScroll(){setNav()}
 let schedScroll=false;
 const onScrollFrame=()=>{schedScroll=false;onScroll();if(typeof lines==='function'&&!reduce)lines()};
 addEventListener('scroll',()=>{if(!schedScroll){schedScroll=true;requestAnimationFrame(onScrollFrame)}},{passive:true});
 addEventListener('resize',onScroll);
 
 if(reduce||saveData){
-  $('#poster').src='assets/end.jpg';hero.style.height='100svh';vid.remove();cv.remove();bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
+  $('#poster').src='assets/end.jpg';vid.remove();bands.forEach(b=>b.classList.toggle('on',b.classList.contains('band-4')||b.classList.contains('band-1')));
   $('.band-1').style.bottom='34vh';
-}else if(phone){initPhone()}else{initDesktop();showBands(0)}
+}else{initPlay()}
 setNav();
 
 /* reveals */
